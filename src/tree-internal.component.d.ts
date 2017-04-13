@@ -26,7 +26,7 @@ export declare class TreeInternalComponent implements OnInit {
     private onNewSelected(e);
     private onRenameSelected();
     private onRemoveSelected();
-    private onSwitchFoldingType();
+    onSwitchFoldingType(): void;
     applyNewValue(e: NodeEditableEvent): void;
     shouldShowInputForTreeValue(): boolean;
     isRootHidden(): boolean;

@@ -14,6 +14,7 @@ export declare class TreeComponent implements OnInit, OnChanges {
     nodeMoved: EventEmitter<any>;
     nodeExpanded: EventEmitter<any>;
     nodeCollapsed: EventEmitter<any>;
+    getAPI: EventEmitter<any>;
     tree: Tree;
     constructor(treeService: TreeService);
     ngOnChanges(changes: SimpleChanges): void;

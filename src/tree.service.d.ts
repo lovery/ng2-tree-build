@@ -1,6 +1,7 @@
 import { NodeRemovedEvent, NodeRenamedEvent, NodeCreatedEvent, NodeSelectedEvent, NodeMovedEvent, NodeExpandedEvent, NodeCollapsedEvent } from './tree.events';
 import { RenamableNode } from './tree.types';
 import { Tree } from './tree';
+import { TreeAPI } from './tree-api';
 import { Subject, Observable } from 'rxjs/Rx';
 import { ElementRef } from '@angular/core';
 import { NodeDraggableService } from './draggable/node-draggable.service';
@@ -14,6 +15,7 @@ export declare class TreeService {
     nodeSelected$: Subject<NodeSelectedEvent>;
     nodeExpanded$: Subject<NodeExpandedEvent>;
     nodeCollapsed$: Subject<NodeCollapsedEvent>;
+    api: TreeAPI;
     constructor(nodeDraggableService: NodeDraggableService);
     unselectStream(tree: Tree): Observable<any>;
     fireNodeRemoved(tree: Tree): void;

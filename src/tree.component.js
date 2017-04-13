@@ -12,6 +12,7 @@ var TreeComponent = (function () {
         this.nodeMoved = new core_1.EventEmitter();
         this.nodeExpanded = new core_1.EventEmitter();
         this.nodeCollapsed = new core_1.EventEmitter();
+        this.getAPI = new core_1.EventEmitter();
     }
     TreeComponent.prototype.ngOnChanges = function (changes) {
         if (!this.treeModel) {
@@ -44,6 +45,7 @@ var TreeComponent = (function () {
         this.treeService.nodeCollapsed$.subscribe(function (e) {
             _this.nodeCollapsed.emit(e);
         });
+        this.getAPI.emit(this.treeService.api);
     };
     TreeComponent.EMPTY_TREE = new tree_1.Tree({ value: '' });
     TreeComponent.decorators = [
@@ -66,6 +68,7 @@ var TreeComponent = (function () {
         'nodeMoved': [{ type: core_1.Output },],
         'nodeExpanded': [{ type: core_1.Output },],
         'nodeCollapsed': [{ type: core_1.Output },],
+        'getAPI': [{ type: core_1.Output },],
     };
     return TreeComponent;
 }());

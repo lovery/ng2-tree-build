@@ -1,5 +1,6 @@
 "use strict";
 var tree_events_1 = require('./tree.events');
+var tree_api_1 = require('./tree-api');
 var Rx_1 = require('rxjs/Rx');
 var core_1 = require('@angular/core');
 var node_draggable_service_1 = require('./draggable/node-draggable.service');
@@ -14,6 +15,7 @@ var TreeService = (function () {
         this.nodeExpanded$ = new Rx_1.Subject();
         this.nodeCollapsed$ = new Rx_1.Subject();
         this.nodeRemoved$.subscribe(function (e) { return e.node.removeItselfFromParent(); });
+        this.api = new tree_api_1.TreeAPI(this);
     }
     TreeService.prototype.unselectStream = function (tree) {
         return this.nodeSelected$.filter(function (e) { return tree !== e.node; });
