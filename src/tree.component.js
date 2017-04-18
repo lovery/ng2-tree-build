@@ -12,7 +12,6 @@ var TreeComponent = (function () {
         this.nodeMoved = new core_1.EventEmitter();
         this.nodeExpanded = new core_1.EventEmitter();
         this.nodeCollapsed = new core_1.EventEmitter();
-        this.getAPI = new core_1.EventEmitter();
     }
     TreeComponent.prototype.ngOnChanges = function (changes) {
         if (!this.treeModel) {
@@ -45,13 +44,18 @@ var TreeComponent = (function () {
         this.treeService.nodeCollapsed$.subscribe(function (e) {
             _this.nodeCollapsed.emit(e);
         });
-        this.getAPI.emit(this.treeService.api);
+    };
+    TreeComponent.prototype.getTreeAPI = function () {
+        return this.treeInternalComponent.getTreeAPI();
+    };
+    TreeComponent.prototype.getChildAPIById = function (id) {
+        return this.treeInternalComponent.getChildAPIById(id);
     };
     TreeComponent.EMPTY_TREE = new tree_1.Tree({ value: '' });
     TreeComponent.decorators = [
         { type: core_1.Component, args: [{
                     selector: 'tree',
-                    template: "<tree-internal [tree]=\"tree\" [settings]=\"settings\"></tree-internal>",
+                    template: "<tree-internal #treeInternalComponent [tree]=\"tree\" [settings]=\"settings\"></tree-internal>",
                     providers: [tree_service_1.TreeService]
                 },] },
     ];
@@ -59,6 +63,7 @@ var TreeComponent = (function () {
         { type: tree_service_1.TreeService, decorators: [{ type: core_1.Inject, args: [tree_service_1.TreeService,] },] },
     ]; };
     TreeComponent.propDecorators = {
+        'treeInternalComponent': [{ type: core_1.ViewChild, args: ['treeInternalComponent',] },],
         'treeModel': [{ type: core_1.Input, args: ['tree',] },],
         'settings': [{ type: core_1.Input },],
         'nodeCreated': [{ type: core_1.Output },],
@@ -68,7 +73,6 @@ var TreeComponent = (function () {
         'nodeMoved': [{ type: core_1.Output },],
         'nodeExpanded': [{ type: core_1.Output },],
         'nodeCollapsed': [{ type: core_1.Output },],
-        'getAPI': [{ type: core_1.Output },],
     };
     return TreeComponent;
 }());

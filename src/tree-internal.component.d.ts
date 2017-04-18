@@ -1,6 +1,7 @@
 import { OnInit, ElementRef } from '@angular/core';
 import { Ng2TreeSettings } from './tree.types';
 import { Tree } from './tree';
+import { TreeInternalAPI } from './tree-internal-api';
 import { NodeMenuService } from './menu/node-menu.service';
 import { NodeMenuItemSelectedEvent } from './menu/menu.events';
 import { NodeEditableEvent } from './editable/editable.events';
@@ -14,11 +15,14 @@ export declare class TreeInternalComponent implements OnInit {
     isSelected: boolean;
     isRightMenuVisible: boolean;
     isLeftMenuVisible: boolean;
+    api: TreeInternalAPI;
     constructor(nodeMenuService: NodeMenuService, treeService: TreeService, element: ElementRef);
     ngOnInit(): void;
     private swapWithSibling(sibling, tree);
     private moveNodeToThisTreeAndRemoveFromPreviousOne(e, tree);
     private moveNodeToParentTreeAndRemoveFromPreviousOne(e, tree);
+    getTreeAPI(): TreeInternalAPI;
+    getChildAPIById(id: number | string): TreeInternalAPI;
     onNodeSelected(e: MouseEvent): void;
     showRightMenu(e: MouseEvent): void;
     showLeftMenu(e: MouseEvent): void;

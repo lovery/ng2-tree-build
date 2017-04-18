@@ -1,11 +1,13 @@
 "use strict";
 var core_1 = require('@angular/core');
 var tree_1 = require('./tree');
+var tree_internal_api_1 = require('./tree-internal-api');
 var node_menu_service_1 = require('./menu/node-menu.service');
 var menu_events_1 = require('./menu/menu.events');
 var editable_events_1 = require('./editable/editable.events');
 var tree_service_1 = require('./tree.service');
 var EventUtils = require('./utils/event.utils');
+var _ = require('lodash');
 var TreeInternalComponent = (function () {
     function TreeInternalComponent(nodeMenuService, treeService, element) {
         this.nodeMenuService = nodeMenuService;
@@ -17,7 +19,10 @@ var TreeInternalComponent = (function () {
     }
     TreeInternalComponent.prototype.ngOnInit = function () {
         var _this = this;
-        this.treeService.api.push(this);
+        this.api = new tree_internal_api_1.TreeInternalAPI(this);
+        if (_.get(this.tree, 'node.id', '')) {
+            this.treeService.APIs[this.tree.node.id] = this.api;
+        }
         this.settings = this.settings || { rootIsVisible: true };
         this.nodeMenuService.hideMenuStream(this.element)
             .subscribe(function () {
@@ -52,6 +57,15 @@ var TreeInternalComponent = (function () {
         this.treeService.fireNodeRemoved(e.captured.tree);
         var addedSibling = tree.addSibling(e.captured.tree, tree.positionInParent);
         this.treeService.fireNodeMoved(addedSibling, e.captured.tree.parent);
+    };
+    TreeInternalComponent.prototype.getTreeAPI = function () {
+        return this.api;
+    };
+    TreeInternalComponent.prototype.getChildAPIById = function (id) {
+        if (this.treeService.APIs.hasOwnProperty(id)) {
+            return this.treeService.APIs[id];
+        }
+        return null;
     };
     TreeInternalComponent.prototype.onNodeSelected = function (e) {
         if (EventUtils.isLeftButtonClicked(e)) {
