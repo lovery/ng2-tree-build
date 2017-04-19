@@ -1,5 +1,5 @@
 "use strict";
-var _ = require('lodash');
+var tree_1 = require('./tree');
 var TreeInternalAPI = (function () {
     function TreeInternalAPI(treeInternalComponent) {
         this.treeInternalComponent = treeInternalComponent;
@@ -16,24 +16,25 @@ var TreeInternalAPI = (function () {
         }
     };
     TreeInternalAPI.prototype.expand = function () {
-        if (this.treeInternalComponent) {
-            var isNodeExpanded = _.get(this.treeInternalComponent, 'tree.isNodeExpanded', null);
-            if (typeof isNodeExpanded === 'function') {
-                if (!isNodeExpanded.call(this.treeInternalComponent['tree'])) {
-                    this.switchFoldingType();
-                }
+        if (this.treeInternalComponent && this.treeInternalComponent['tree'] instanceof tree_1.Tree) {
+            if (!this.treeInternalComponent['tree']['isNodeExpanded'].call(this.treeInternalComponent['tree'])) {
+                this.switchFoldingType();
             }
         }
     };
     TreeInternalAPI.prototype.collapse = function () {
-        if (this.treeInternalComponent) {
-            var isNodeExpanded = _.get(this.treeInternalComponent, 'tree.isNodeExpanded', null);
-            if (typeof isNodeExpanded === 'function') {
-                if (isNodeExpanded.call(this.treeInternalComponent['tree'])) {
-                    this.switchFoldingType();
-                }
+        if (this.treeInternalComponent && this.treeInternalComponent['tree'] instanceof tree_1.Tree) {
+            if (this.treeInternalComponent['tree']['isNodeExpanded'].call(this.treeInternalComponent['tree'])) {
+                this.switchFoldingType();
             }
         }
+    };
+    TreeInternalAPI.prototype.rename = function (newValue) {
+        if (this.treeInternalComponent && this.treeInternalComponent['tree'] instanceof tree_1.Tree) {
+            this.treeInternalComponent['tree']['value'] = newValue;
+        }
+    };
+    TreeInternalAPI.prototype.reloadChildren = function () {
     };
     return TreeInternalAPI;
 }());

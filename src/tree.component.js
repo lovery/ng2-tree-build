@@ -1,5 +1,6 @@
 "use strict";
 var core_1 = require('@angular/core');
+var _ = require('lodash');
 var tree_service_1 = require('./tree.service');
 var tree_1 = require('./tree');
 var TreeComponent = (function () {
@@ -46,16 +47,22 @@ var TreeComponent = (function () {
         });
     };
     TreeComponent.prototype.getTreeAPI = function () {
-        return this.treeInternalComponent.getTreeAPI();
+        if (_.get(this.tree, 'node.id', null) && this.treeService.APIs.hasOwnProperty(this.tree.node.id)) {
+            return this.treeService.APIs[this.tree.node.id];
+        }
+        return null;
     };
     TreeComponent.prototype.getChildAPIById = function (id) {
-        return this.treeInternalComponent.getChildAPIById(id);
+        if (this.treeService.APIs.hasOwnProperty(id)) {
+            return this.treeService.APIs[id];
+        }
+        return null;
     };
     TreeComponent.EMPTY_TREE = new tree_1.Tree({ value: '' });
     TreeComponent.decorators = [
         { type: core_1.Component, args: [{
                     selector: 'tree',
-                    template: "<tree-internal #treeInternalComponent [tree]=\"tree\" [settings]=\"settings\"></tree-internal>",
+                    template: "<tree-internal [tree]=\"tree\" [settings]=\"settings\"></tree-internal>",
                     providers: [tree_service_1.TreeService]
                 },] },
     ];
@@ -63,7 +70,6 @@ var TreeComponent = (function () {
         { type: tree_service_1.TreeService, decorators: [{ type: core_1.Inject, args: [tree_service_1.TreeService,] },] },
     ]; };
     TreeComponent.propDecorators = {
-        'treeInternalComponent': [{ type: core_1.ViewChild, args: ['treeInternalComponent',] },],
         'treeModel': [{ type: core_1.Input, args: ['tree',] },],
         'settings': [{ type: core_1.Input },],
         'nodeCreated': [{ type: core_1.Output },],

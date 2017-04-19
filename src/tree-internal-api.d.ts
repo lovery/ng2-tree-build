@@ -6,4 +6,6 @@ export declare class TreeInternalAPI {
     switchFoldingType(): void;
     expand(): void;
     collapse(): void;
+    rename(newValue: string): void;
+    reloadChildren(): void;
 }

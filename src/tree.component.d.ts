@@ -5,7 +5,6 @@ import { Tree } from './tree';
 import { TreeInternalAPI } from './tree-internal-api';
 export declare class TreeComponent implements OnInit, OnChanges {
     private treeService;
-    treeInternalComponent: any;
     private static EMPTY_TREE;
     treeModel: TreeModel;
     settings: Ng2TreeSettings;

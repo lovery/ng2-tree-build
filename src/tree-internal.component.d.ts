@@ -21,8 +21,6 @@ export declare class TreeInternalComponent implements OnInit {
     private swapWithSibling(sibling, tree);
     private moveNodeToThisTreeAndRemoveFromPreviousOne(e, tree);
     private moveNodeToParentTreeAndRemoveFromPreviousOne(e, tree);
-    getTreeAPI(): TreeInternalAPI;
-    getChildAPIById(id: number | string): TreeInternalAPI;
     onNodeSelected(e: MouseEvent): void;
     showRightMenu(e: MouseEvent): void;
     showLeftMenu(e: MouseEvent): void;
