@@ -1,6 +1,5 @@
 "use strict";
 var core_1 = require('@angular/core');
-var _ = require('lodash');
 var tree_service_1 = require('./tree.service');
 var tree_1 = require('./tree');
 var TreeComponent = (function () {
@@ -46,15 +45,12 @@ var TreeComponent = (function () {
             _this.nodeCollapsed.emit(e);
         });
     };
-    TreeComponent.prototype.getTreeAPI = function () {
-        if (_.get(this.tree, 'node.id', null) && this.treeService.APIs.hasOwnProperty(this.tree.node.id)) {
-            return this.treeService.APIs[this.tree.node.id];
-        }
-        return null;
+    TreeComponent.prototype.getController = function () {
+        return this.rootComponent.controller;
     };
-    TreeComponent.prototype.getChildAPIById = function (id) {
-        if (this.treeService.APIs.hasOwnProperty(id)) {
-            return this.treeService.APIs[id];
+    TreeComponent.prototype.getChildControllerById = function (id) {
+        if (this.treeService.controllers.hasOwnProperty(id)) {
+            return this.treeService.controllers[id];
         }
         return null;
     };
@@ -62,7 +58,7 @@ var TreeComponent = (function () {
     TreeComponent.decorators = [
         { type: core_1.Component, args: [{
                     selector: 'tree',
-                    template: "<tree-internal [tree]=\"tree\" [settings]=\"settings\"></tree-internal>",
+                    template: "<tree-internal #rootComponent [tree]=\"tree\" [settings]=\"settings\"></tree-internal>",
                     providers: [tree_service_1.TreeService]
                 },] },
     ];
@@ -79,6 +75,7 @@ var TreeComponent = (function () {
         'nodeMoved': [{ type: core_1.Output },],
         'nodeExpanded': [{ type: core_1.Output },],
         'nodeCollapsed': [{ type: core_1.Output },],
+        'rootComponent': [{ type: core_1.ViewChild, args: ['rootComponent',] },],
     };
     return TreeComponent;
 }());

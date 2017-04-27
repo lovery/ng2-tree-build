@@ -14,7 +14,7 @@ export declare class TreeService {
     nodeSelected$: Subject<NodeSelectedEvent>;
     nodeExpanded$: Subject<NodeExpandedEvent>;
     nodeCollapsed$: Subject<NodeCollapsedEvent>;
-    APIs: Object;
+    controllers: Object;
     constructor(nodeDraggableService: NodeDraggableService);
     unselectStream(tree: Tree): Observable<any>;
     fireNodeRemoved(tree: Tree): void;

@@ -1,5 +1,5 @@
 import { TreeInternalComponent } from './tree-internal.component';
-export declare class TreeInternalAPI {
+export declare class TreeController {
     private treeInternalComponent;
     constructor(treeInternalComponent: TreeInternalComponent);
     select(e?: MouseEvent): void;

@@ -1,7 +1,7 @@
 import { OnInit, ElementRef } from '@angular/core';
 import { Ng2TreeSettings } from './tree.types';
 import { Tree } from './tree';
-import { TreeInternalAPI } from './tree-internal-api';
+import { TreeController } from './tree-controller';
 import { NodeMenuService } from './menu/node-menu.service';
 import { NodeMenuItemSelectedEvent } from './menu/menu.events';
 import { NodeEditableEvent } from './editable/editable.events';
@@ -15,7 +15,7 @@ export declare class TreeInternalComponent implements OnInit {
     isSelected: boolean;
     isRightMenuVisible: boolean;
     isLeftMenuVisible: boolean;
-    api: TreeInternalAPI;
+    controller: TreeController;
     constructor(nodeMenuService: NodeMenuService, treeService: TreeService, element: ElementRef);
     ngOnInit(): void;
     private swapWithSibling(sibling, tree);

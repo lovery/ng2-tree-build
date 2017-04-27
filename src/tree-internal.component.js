@@ -1,7 +1,7 @@
 "use strict";
 var core_1 = require('@angular/core');
 var tree_1 = require('./tree');
-var tree_internal_api_1 = require('./tree-internal-api');
+var tree_controller_1 = require('./tree-controller');
 var node_menu_service_1 = require('./menu/node-menu.service');
 var menu_events_1 = require('./menu/menu.events');
 var editable_events_1 = require('./editable/editable.events');
@@ -19,9 +19,9 @@ var TreeInternalComponent = (function () {
     }
     TreeInternalComponent.prototype.ngOnInit = function () {
         var _this = this;
-        this.api = new tree_internal_api_1.TreeInternalAPI(this);
+        this.controller = new tree_controller_1.TreeController(this);
         if (_.get(this.tree, 'node.id', '')) {
-            this.treeService.APIs[this.tree.node.id] = this.api;
+            this.treeService.controllers[this.tree.node.id] = this.controller;
         }
         this.settings = this.settings || { rootIsVisible: true };
         this.nodeMenuService.hideMenuStream(this.element)

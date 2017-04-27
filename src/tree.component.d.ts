@@ -2,7 +2,7 @@ import { OnInit, EventEmitter, OnChanges, SimpleChanges } from '@angular/core';
 import { TreeService } from './tree.service';
 import { TreeModel, Ng2TreeSettings } from './tree.types';
 import { Tree } from './tree';
-import { TreeInternalAPI } from './tree-internal-api';
+import { TreeController } from './tree-controller';
 export declare class TreeComponent implements OnInit, OnChanges {
     private treeService;
     private static EMPTY_TREE;
@@ -16,9 +16,10 @@ export declare class TreeComponent implements OnInit, OnChanges {
     nodeExpanded: EventEmitter<any>;
     nodeCollapsed: EventEmitter<any>;
     tree: Tree;
+    rootComponent: any;
     constructor(treeService: TreeService);
     ngOnChanges(changes: SimpleChanges): void;
     ngOnInit(): void;
-    getTreeAPI(): TreeInternalAPI;
-    getChildAPIById(id: number | string): TreeInternalAPI;
+    getController(): TreeController;
+    getChildControllerById(id: number | string): TreeController;
 }

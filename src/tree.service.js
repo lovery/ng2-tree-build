@@ -13,7 +13,7 @@ var TreeService = (function () {
         this.nodeSelected$ = new Rx_1.Subject();
         this.nodeExpanded$ = new Rx_1.Subject();
         this.nodeCollapsed$ = new Rx_1.Subject();
-        this.APIs = {};
+        this.controllers = {};
         this.nodeRemoved$.subscribe(function (e) { return e.node.removeItselfFromParent(); });
     }
     TreeService.prototype.unselectStream = function (tree) {
