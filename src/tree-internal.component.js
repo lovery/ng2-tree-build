@@ -115,6 +115,10 @@ var TreeInternalComponent = (function () {
         this.isLeftMenuVisible = false;
     };
     TreeInternalComponent.prototype.onRemoveSelected = function () {
+        if (_.get(this.tree, 'node.id', '') && this.treeService.controllers.hasOwnProperty(this.tree.node.id)) {
+            console.log('should delete ', this.tree.node.id);
+            delete this.treeService.controllers[this.tree.node.id];
+        }
         this.treeService.fireNodeRemoved(this.tree);
     };
     TreeInternalComponent.prototype.onSwitchFoldingType = function () {

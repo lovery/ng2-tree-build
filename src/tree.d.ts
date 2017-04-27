@@ -13,7 +13,7 @@ export declare class Tree {
     childrenShouldBeLoaded(): boolean;
     readonly children: Tree[];
     readonly childrenAsync: Observable<Tree[]>;
-    createNode(isBranch: boolean): Tree;
+    createNode(isBranch: boolean, model?: TreeModel): Tree;
     value: any;
     addSibling(sibling: Tree, position?: number): Tree;
     addChild(child: Tree, position?: number): Tree;

@@ -70,9 +70,12 @@ var Tree = (function () {
         enumerable: true,
         configurable: true
     });
-    Tree.prototype.createNode = function (isBranch) {
-        var tree = new Tree({ value: '' }, null, isBranch);
-        tree.markAsNew();
+    Tree.prototype.createNode = function (isBranch, model) {
+        if (model === void 0) { model = { value: '' }; }
+        var tree = new Tree(model, this, isBranch);
+        if (!model.id) {
+            tree.markAsNew();
+        }
         if (this.isLeaf()) {
             return this.addSibling(tree);
         }
