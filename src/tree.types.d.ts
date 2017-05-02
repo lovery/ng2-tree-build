@@ -2,6 +2,7 @@ export declare class FoldingType {
     private _cssClass;
     static Expanded: FoldingType;
     static Collapsed: FoldingType;
+    static Empty: FoldingType;
     static Leaf: FoldingType;
     constructor(_cssClass: string);
     readonly cssClass: string;

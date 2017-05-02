@@ -13,7 +13,7 @@ var Tree = (function () {
         if (parent === void 0) { parent = null; }
         if (isBranch === void 0) { isBranch = false; }
         this._childrenLoadingState = ChildrenLoadingState.NotStarted;
-        this.buildTreeFromModel(node, parent, isBranch);
+        this.buildTreeFromModel(node, parent, isBranch || Boolean(node.children));
     }
     Tree.prototype.buildTreeFromModel = function (model, parent, isBranch) {
         var _this = this;
@@ -76,6 +76,7 @@ var Tree = (function () {
         if (!model.id) {
             tree.markAsNew();
         }
+        debugger;
         if (this.isLeaf()) {
             return this.addSibling(tree);
         }
@@ -121,6 +122,7 @@ var Tree = (function () {
         else {
             this._children = [child];
         }
+        this._setFoldingType();
         return child;
     };
     Tree.prototype.swapWithSibling = function (sibling) {
@@ -154,6 +156,9 @@ var Tree = (function () {
     Tree.prototype.isBranch = function () {
         return Array.isArray(this._children);
     };
+    Tree.prototype.isEmpty = function () {
+        return !(this.childrenShouldBeLoaded() || (this._children && this._children.length > 0));
+    };
     Tree.prototype.isRoot = function () {
         return this.parent === null;
     };
@@ -168,6 +173,7 @@ var Tree = (function () {
         if (childIndex >= 0) {
             this._children.splice(childIndex, 1);
         }
+        this._setFoldingType();
     };
     Tree.prototype.removeItselfFromParent = function () {
         if (!this.parent) {
@@ -176,7 +182,7 @@ var Tree = (function () {
         this.parent.removeChild(this);
     };
     Tree.prototype.switchFoldingType = function () {
-        if (this.isLeaf()) {
+        if (this.isLeaf() || this.isEmpty()) {
             return;
         }
         this.node._foldingType = this.isNodeExpanded() ? tree_types_1.FoldingType.Collapsed : tree_types_1.FoldingType.Expanded;
@@ -188,8 +194,11 @@ var Tree = (function () {
         if (this.childrenShouldBeLoaded()) {
             this.node._foldingType = tree_types_1.FoldingType.Collapsed;
         }
-        else if (this._children) {
+        else if (_.get(this._children, 'length', 0) > 0) {
             this.node._foldingType = tree_types_1.FoldingType.Expanded;
+        }
+        else if (this._children) {
+            this.node._foldingType = tree_types_1.FoldingType.Empty;
         }
         else {
             this.node._foldingType = tree_types_1.FoldingType.Leaf;

@@ -13,6 +13,7 @@ var FoldingType = (function () {
     });
     FoldingType.Expanded = new FoldingType('node-expanded');
     FoldingType.Collapsed = new FoldingType('node-collapsed');
+    FoldingType.Empty = new FoldingType('node-empty');
     FoldingType.Leaf = new FoldingType('node-leaf');
     return FoldingType;
 }());

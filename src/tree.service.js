@@ -13,7 +13,7 @@ var TreeService = (function () {
         this.nodeSelected$ = new Rx_1.Subject();
         this.nodeExpanded$ = new Rx_1.Subject();
         this.nodeCollapsed$ = new Rx_1.Subject();
-        this.controllers = {};
+        this.controllers = new Map();
         this.nodeRemoved$.subscribe(function (e) { return e.node.removeItselfFromParent(); });
     }
     TreeService.prototype.unselectStream = function (tree) {
@@ -55,6 +55,20 @@ var TreeService = (function () {
         return this.nodeDraggableService.draggableNodeEvents$
             .filter(function (e) { return e.target === element; })
             .filter(function (e) { return !e.captured.tree.hasChild(tree); });
+    };
+    TreeService.prototype.setController = function (id, controller) {
+        this.controllers.set(id, controller);
+    };
+    TreeService.prototype.deleteController = function (id) {
+        if (this.controllers.has(id)) {
+            this.controllers.delete(id);
+        }
+    };
+    TreeService.prototype.getController = function (id) {
+        if (this.controllers.has(id)) {
+            return this.controllers.get(id);
+        }
+        return null;
     };
     TreeService.decorators = [
         { type: core_1.Injectable },

@@ -25,6 +25,7 @@ export declare class Tree {
     hasRightMenu(): boolean;
     isLeaf(): boolean;
     isBranch(): boolean;
+    isEmpty(): boolean;
     isRoot(): boolean;
     hasSibling(tree: Tree): boolean;
     hasChild(tree: Tree): boolean;

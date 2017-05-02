@@ -49,10 +49,7 @@ var TreeComponent = (function () {
         return this.rootComponent.controller;
     };
     TreeComponent.prototype.getChildControllerById = function (id) {
-        if (this.treeService.controllers.hasOwnProperty(id)) {
-            return this.treeService.controllers[id];
-        }
-        return null;
+        return this.treeService.getController(id);
     };
     TreeComponent.EMPTY_TREE = new tree_1.Tree({ value: '' });
     TreeComponent.decorators = [

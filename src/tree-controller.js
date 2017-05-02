@@ -3,6 +3,7 @@ var menu_events_1 = require('./menu/menu.events');
 var TreeController = (function () {
     function TreeController(treeInternalComponent) {
         this.treeInternalComponent = treeInternalComponent;
+        this.tree = this.treeInternalComponent.tree;
     }
     TreeController.prototype.select = function (e) {
         if (e === void 0) { e = new MouseEvent('click'); }
@@ -10,28 +11,19 @@ var TreeController = (function () {
             this.treeInternalComponent.onNodeSelected(e);
         }
     };
-    TreeController.prototype.switchFoldingType = function () {
-        if (this.treeInternalComponent && typeof this.treeInternalComponent.onSwitchFoldingType === 'function') {
+    TreeController.prototype.expand = function () {
+        if (this.treeInternalComponent && !this.tree.isNodeExpanded()) {
             this.treeInternalComponent.onSwitchFoldingType();
         }
     };
-    TreeController.prototype.expand = function () {
-        if (this.treeInternalComponent && this.treeInternalComponent.tree) {
-            if (!this.treeInternalComponent.tree.isNodeExpanded()) {
-                this.switchFoldingType();
-            }
-        }
-    };
     TreeController.prototype.collapse = function () {
-        if (this.treeInternalComponent && this.treeInternalComponent.tree) {
-            if (this.treeInternalComponent.tree.isNodeExpanded()) {
-                this.switchFoldingType();
-            }
+        if (this.treeInternalComponent && this.tree.isNodeExpanded()) {
+            this.treeInternalComponent.onSwitchFoldingType();
         }
     };
     TreeController.prototype.rename = function (newValue) {
-        if (this.treeInternalComponent && this.treeInternalComponent.tree) {
-            this.treeInternalComponent.tree.markAsBeingRenamed();
+        if (this.treeInternalComponent && this.tree) {
+            this.tree.markAsBeingRenamed();
             var nodeEditableEvent = { type: 'keyup', value: newValue };
             this.treeInternalComponent.applyNewValue(nodeEditableEvent);
         }
@@ -42,8 +34,8 @@ var TreeController = (function () {
         }
     };
     TreeController.prototype.addChild = function (newNode) {
-        if (this.treeInternalComponent && typeof this.treeInternalComponent.tree) {
-            var newTree = this.treeInternalComponent.tree.createNode(Boolean(newNode.children), newNode);
+        if (this.treeInternalComponent && typeof this.tree) {
+            var newTree = this.tree.createNode(Boolean(newNode.children), newNode);
             this.treeInternalComponent.treeService.fireNodeCreated(newTree);
         }
     };
