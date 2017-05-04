@@ -9,6 +9,7 @@ export declare class Tree {
     constructor(node: TreeModel, parent?: Tree, isBranch?: boolean);
     private buildTreeFromModel(model, parent, isBranch);
     childrenAreBeingLoaded(): boolean;
+    childrenWereLoaded(): boolean;
     private canLoadChildren();
     childrenShouldBeLoaded(): boolean;
     readonly children: Tree[];
@@ -23,9 +24,10 @@ export declare class Tree {
     isStatic(): boolean;
     hasLeftMenu(): boolean;
     hasRightMenu(): boolean;
+    getMenuCustomFunction(): Function;
     isLeaf(): boolean;
     isBranch(): boolean;
-    isEmpty(): boolean;
+    hasChildren(): boolean;
     isRoot(): boolean;
     hasSibling(tree: Tree): boolean;
     hasChild(tree: Tree): boolean;
@@ -33,6 +35,7 @@ export declare class Tree {
     removeItselfFromParent(): void;
     switchFoldingType(): void;
     isNodeExpanded(): boolean;
+    isNodeCollapsed(): boolean;
     private _setFoldingType();
     readonly foldingType: FoldingType;
     readonly foldingCssClass: string;

@@ -1,4 +1,4 @@
-import { OnInit, ElementRef } from '@angular/core';
+import { OnInit, OnDestroy, ElementRef } from '@angular/core';
 import { Ng2TreeSettings } from './tree.types';
 import { Tree } from './tree';
 import { TreeController } from './tree-controller';
@@ -6,7 +6,7 @@ import { NodeMenuService } from './menu/node-menu.service';
 import { NodeMenuItemSelectedEvent } from './menu/menu.events';
 import { NodeEditableEvent } from './editable/editable.events';
 import { TreeService } from './tree.service';
-export declare class TreeInternalComponent implements OnInit {
+export declare class TreeInternalComponent implements OnInit, OnDestroy {
     private nodeMenuService;
     treeService: TreeService;
     element: ElementRef;
@@ -18,6 +18,7 @@ export declare class TreeInternalComponent implements OnInit {
     controller: TreeController;
     constructor(nodeMenuService: NodeMenuService, treeService: TreeService, element: ElementRef);
     ngOnInit(): void;
+    ngOnDestroy(): void;
     private swapWithSibling(sibling, tree);
     private moveNodeToThisTreeAndRemoveFromPreviousOne(e, tree);
     private moveNodeToParentTreeAndRemoveFromPreviousOne(e, tree);

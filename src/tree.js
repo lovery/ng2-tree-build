@@ -36,6 +36,9 @@ var Tree = (function () {
     Tree.prototype.childrenAreBeingLoaded = function () {
         return (this._childrenLoadingState === ChildrenLoadingState.Loading);
     };
+    Tree.prototype.childrenWereLoaded = function () {
+        return (this._childrenLoadingState === ChildrenLoadingState.Completed);
+    };
     Tree.prototype.canLoadChildren = function () {
         return (this._childrenLoadingState === ChildrenLoadingState.NotStarted)
             && (this.foldingType === tree_types_1.FoldingType.Expanded)
@@ -76,7 +79,9 @@ var Tree = (function () {
         if (!model.id) {
             tree.markAsNew();
         }
-        debugger;
+        if (this.childrenShouldBeLoaded() && !(this.childrenAreBeingLoaded() || this.childrenWereLoaded())) {
+            return null;
+        }
         if (this.isLeaf()) {
             return this.addSibling(tree);
         }
@@ -123,6 +128,9 @@ var Tree = (function () {
             this._children = [child];
         }
         this._setFoldingType();
+        if (this.isNodeCollapsed()) {
+            this.switchFoldingType();
+        }
         return child;
     };
     Tree.prototype.swapWithSibling = function (sibling) {
@@ -150,14 +158,17 @@ var Tree = (function () {
     Tree.prototype.hasRightMenu = function () {
         return !_.get(this.node.settings, 'static', false) && _.get(this.node.settings, 'rightMenu', false);
     };
+    Tree.prototype.getMenuCustomFunction = function () {
+        return _.get(this.node.settings, 'menu', null);
+    };
     Tree.prototype.isLeaf = function () {
         return !this.isBranch();
     };
     Tree.prototype.isBranch = function () {
         return Array.isArray(this._children);
     };
-    Tree.prototype.isEmpty = function () {
-        return !(this.childrenShouldBeLoaded() || (this._children && this._children.length > 0));
+    Tree.prototype.hasChildren = function () {
+        return !_.isEmpty(this._children) || this.childrenShouldBeLoaded();
     };
     Tree.prototype.isRoot = function () {
         return this.parent === null;
@@ -182,7 +193,7 @@ var Tree = (function () {
         this.parent.removeChild(this);
     };
     Tree.prototype.switchFoldingType = function () {
-        if (this.isLeaf() || this.isEmpty()) {
+        if (this.isLeaf() || !this.hasChildren()) {
             return;
         }
         this.node._foldingType = this.isNodeExpanded() ? tree_types_1.FoldingType.Collapsed : tree_types_1.FoldingType.Expanded;
@@ -190,14 +201,17 @@ var Tree = (function () {
     Tree.prototype.isNodeExpanded = function () {
         return this.foldingType === tree_types_1.FoldingType.Expanded;
     };
+    Tree.prototype.isNodeCollapsed = function () {
+        return this.foldingType === tree_types_1.FoldingType.Collapsed;
+    };
     Tree.prototype._setFoldingType = function () {
         if (this.childrenShouldBeLoaded()) {
             this.node._foldingType = tree_types_1.FoldingType.Collapsed;
         }
-        else if (_.get(this._children, 'length', 0) > 0) {
+        else if (this._children && !_.isEmpty(this._children)) {
             this.node._foldingType = tree_types_1.FoldingType.Expanded;
         }
-        else if (this._children) {
+        else if (Array.isArray(this._children)) {
             this.node._foldingType = tree_types_1.FoldingType.Empty;
         }
         else {
@@ -230,6 +244,9 @@ var Tree = (function () {
         }
         else if (this.node._foldingType === tree_types_1.FoldingType.Expanded) {
             return _.get(this.node.settings, 'cssClasses.expanded', null);
+        }
+        else if (this.node._foldingType === tree_types_1.FoldingType.Empty) {
+            return _.get(this.node.settings, 'cssClasses.empty', null);
         }
         return _.get(this.node.settings, 'cssClasses.leaf', null);
     };

@@ -20,6 +20,7 @@ export interface TreeModel {
 export interface CssClasses {
     expanded?: string;
     collapsed?: string;
+    empty?: string;
     leaf?: string;
 }
 export interface Templates {
@@ -32,6 +33,7 @@ export declare class TreeModelSettings {
     templates?: Templates;
     leftMenu?: boolean;
     rightMenu?: boolean;
+    menu?: Function;
     static?: boolean;
     static merge(sourceA: TreeModel, sourceB: TreeModel): TreeModelSettings;
 }

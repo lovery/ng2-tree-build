@@ -20,7 +20,6 @@ var TreeInternalComponent = (function () {
     TreeInternalComponent.prototype.ngOnInit = function () {
         var _this = this;
         this.controller = new tree_controller_1.TreeController(this);
-        console.log(this);
         if (_.get(this.tree, 'node.id', '')) {
             this.treeService.setController(this.tree.node.id, this.controller);
         }
@@ -44,6 +43,11 @@ var TreeInternalComponent = (function () {
                 _this.moveNodeToParentTreeAndRemoveFromPreviousOne(e, _this.tree);
             }
         });
+    };
+    TreeInternalComponent.prototype.ngOnDestroy = function () {
+        if (_.get(this.tree, 'node.id', '')) {
+            this.treeService.deleteController(this.tree.node.id);
+        }
     };
     TreeInternalComponent.prototype.swapWithSibling = function (sibling, tree) {
         tree.swapWithSibling(sibling);
@@ -70,8 +74,14 @@ var TreeInternalComponent = (function () {
             return;
         }
         if (EventUtils.isRightButtonClicked(e)) {
-            this.isRightMenuVisible = !this.isRightMenuVisible;
-            this.nodeMenuService.hideMenuForAllNodesExcept(this.element);
+            var menu = this.tree.getMenuCustomFunction();
+            if (menu && typeof menu === 'function') {
+                menu(e, this.tree.node);
+            }
+            else {
+                this.isRightMenuVisible = !this.isRightMenuVisible;
+                this.nodeMenuService.hideMenuForAllNodesExcept(this.element);
+            }
         }
         e.preventDefault();
     };
@@ -80,10 +90,16 @@ var TreeInternalComponent = (function () {
             return;
         }
         if (EventUtils.isLeftButtonClicked(e)) {
-            this.isLeftMenuVisible = !this.isLeftMenuVisible;
-            this.nodeMenuService.hideMenuForAllNodesExcept(this.element);
-            if (this.isLeftMenuVisible) {
-                e.preventDefault();
+            var menu = this.tree.getMenuCustomFunction();
+            if (menu && typeof menu === 'function') {
+                menu(e, this.tree.node);
+            }
+            else {
+                this.isLeftMenuVisible = !this.isLeftMenuVisible;
+                this.nodeMenuService.hideMenuForAllNodesExcept(this.element);
+                if (this.isLeftMenuVisible) {
+                    e.preventDefault();
+                }
             }
         }
     };

@@ -21,5 +21,5 @@ export declare class TreeComponent implements OnInit, OnChanges {
     ngOnChanges(changes: SimpleChanges): void;
     ngOnInit(): void;
     getController(): TreeController;
-    getChildControllerById(id: number | string): TreeController;
+    getControllerByNodeId(id: number | string): TreeController;
 }

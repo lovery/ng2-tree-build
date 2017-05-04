@@ -48,7 +48,7 @@ var TreeComponent = (function () {
     TreeComponent.prototype.getController = function () {
         return this.rootComponent.controller;
     };
-    TreeComponent.prototype.getChildControllerById = function (id) {
+    TreeComponent.prototype.getControllerByNodeId = function (id) {
         return this.treeService.getController(id);
     };
     TreeComponent.EMPTY_TREE = new tree_1.Tree({ value: '' });

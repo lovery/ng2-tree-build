@@ -35,13 +35,10 @@ var TreeService = (function () {
         this.nodeMoved$.next(new tree_events_1.NodeMovedEvent(tree, parent));
     };
     TreeService.prototype.fireNodeSwitchFoldingType = function (tree) {
-        if (tree.isLeaf()) {
-            return;
-        }
         if (tree.isNodeExpanded()) {
             this.fireNodeExpanded(tree);
         }
-        else {
+        else if (tree.isNodeCollapsed()) {
             this.fireNodeCollapsed(tree);
         }
     };
