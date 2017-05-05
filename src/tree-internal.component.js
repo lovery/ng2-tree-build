@@ -14,6 +14,7 @@ var TreeInternalComponent = (function () {
         this.treeService = treeService;
         this.element = element;
         this.isSelected = false;
+        this.isActive = false;
         this.isRightMenuVisible = false;
         this.isLeftMenuVisible = false;
     }
@@ -28,6 +29,7 @@ var TreeInternalComponent = (function () {
             .subscribe(function () {
             _this.isRightMenuVisible = false;
             _this.isLeftMenuVisible = false;
+            _this.isActive = false;
         });
         this.treeService.unselectStream(this.tree)
             .subscribe(function () { return _this.isSelected = false; });
@@ -80,8 +82,9 @@ var TreeInternalComponent = (function () {
             }
             else {
                 this.isRightMenuVisible = !this.isRightMenuVisible;
-                this.nodeMenuService.hideMenuForAllNodesExcept(this.element);
             }
+            this.nodeMenuService.hideMenuForAllNodesExcept(this.element);
+            this.isActive = !this.isActive;
         }
         e.preventDefault();
     };
@@ -96,11 +99,12 @@ var TreeInternalComponent = (function () {
             }
             else {
                 this.isLeftMenuVisible = !this.isLeftMenuVisible;
-                this.nodeMenuService.hideMenuForAllNodesExcept(this.element);
                 if (this.isLeftMenuVisible) {
                     e.preventDefault();
                 }
             }
+            this.nodeMenuService.hideMenuForAllNodesExcept(this.element);
+            this.isActive = !this.isActive;
         }
     };
     TreeInternalComponent.prototype.onMenuItemSelected = function (e) {
@@ -163,7 +167,7 @@ var TreeInternalComponent = (function () {
     TreeInternalComponent.decorators = [
         { type: core_1.Component, args: [{
                     selector: 'tree-internal',
-                    template: "\n  <ul class=\"tree\" *ngIf=\"tree\" [ngClass]=\"{rootless: isRootHidden()}\">\n    <li>\n      <div class=\"value-container\"\n        [ngClass]=\"{rootless: isRootHidden()}\"\n        [class.selected]=\"isSelected\"\n        (contextmenu)=\"showRightMenu($event)\"\n        [nodeDraggable]=\"element\"\n        [tree]=\"tree\">\n\n        <div class=\"folding\" (click)=\"onSwitchFoldingType()\" [ngClass]=\"tree.foldingCssClass\"></div>\n        <div class=\"node-value\"\n          *ngIf=\"!shouldShowInputForTreeValue()\"\n          [class.node-selected]=\"isSelected\"\n          (click)=\"onNodeSelected($event)\">\n            <div *ngIf=\"tree.nodeTemplate\" class=\"node-template\" [innerHTML]=\"tree.nodeTemplate | safeHtml\"></div>\n            <span class=\"node-name\" [innerHTML]=\"tree.value | safeHtml\"></span>\n            <span class=\"loading-children\" *ngIf=\"tree.childrenAreBeingLoaded()\"></span>\n        </div>\n\n        <input type=\"text\" class=\"node-value\"\n           *ngIf=\"shouldShowInputForTreeValue()\"\n           [nodeEditable]=\"tree.value\"\n           (valueChanged)=\"applyNewValue($event)\"/>\n\n        <div class=\"node-left-menu\" *ngIf=\"tree.hasLeftMenu()\" (click)=\"showLeftMenu($event)\" [innerHTML]=\"tree.leftMenuTemplate\">\n        </div>\n        <node-menu *ngIf=\"tree.hasLeftMenu() && isLeftMenuVisible\"\n          (menuItemSelected)=\"onMenuItemSelected($event)\">\n        </node-menu>\n      </div>\n\n      <node-menu *ngIf=\"isRightMenuVisible\" (menuItemSelected)=\"onMenuItemSelected($event)\"></node-menu>\n\n      <template [ngIf]=\"tree.isNodeExpanded()\">\n        <tree-internal *ngFor=\"let child of tree.childrenAsync | async\" [tree]=\"child\"></tree-internal>\n      </template>\n    </li>\n  </ul>\n  "
+                    template: "\n  <ul class=\"tree\" *ngIf=\"tree\" [ngClass]=\"{rootless: isRootHidden()}\">\n    <li>\n      <div class=\"value-container\"\n        [ngClass]=\"{rootless: isRootHidden(), active: isActive}\"\n        [class.selected]=\"isSelected\"\n        (contextmenu)=\"showRightMenu($event)\"\n        [nodeDraggable]=\"element\"\n        [tree]=\"tree\">\n\n        <div class=\"folding\" (click)=\"onSwitchFoldingType()\" [ngClass]=\"tree.foldingCssClass\"></div>\n        <div class=\"node-value\"\n          *ngIf=\"!shouldShowInputForTreeValue()\"\n          [class.node-selected]=\"isSelected\"\n          (click)=\"onNodeSelected($event)\">\n            <div *ngIf=\"tree.nodeTemplate\" class=\"node-template\" [innerHTML]=\"tree.nodeTemplate | safeHtml\"></div>\n            <span class=\"node-name\" [innerHTML]=\"tree.value | safeHtml\"></span>\n            <span class=\"loading-children\" *ngIf=\"tree.childrenAreBeingLoaded()\"></span>\n        </div>\n\n        <input type=\"text\" class=\"node-value\"\n           *ngIf=\"shouldShowInputForTreeValue()\"\n           [nodeEditable]=\"tree.value\"\n           (valueChanged)=\"applyNewValue($event)\"/>\n\n        <div class=\"node-left-menu\" *ngIf=\"tree.hasLeftMenu()\" (click)=\"showLeftMenu($event)\" [innerHTML]=\"tree.leftMenuTemplate\">\n        </div>\n        <node-menu *ngIf=\"tree.hasLeftMenu() && isLeftMenuVisible\"\n          (menuItemSelected)=\"onMenuItemSelected($event)\">\n        </node-menu>\n      </div>\n\n      <node-menu *ngIf=\"isRightMenuVisible\" (menuItemSelected)=\"onMenuItemSelected($event)\"></node-menu>\n\n      <template [ngIf]=\"tree.isNodeExpanded()\">\n        <tree-internal *ngFor=\"let child of tree.childrenAsync | async\" [tree]=\"child\"></tree-internal>\n      </template>\n    </li>\n  </ul>\n  "
                 },] },
     ];
     TreeInternalComponent.ctorParameters = function () { return [

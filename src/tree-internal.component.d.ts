@@ -13,6 +13,7 @@ export declare class TreeInternalComponent implements OnInit, OnDestroy {
     tree: Tree;
     settings: Ng2TreeSettings;
     isSelected: boolean;
+    isActive: boolean;
     isRightMenuVisible: boolean;
     isLeftMenuVisible: boolean;
     controller: TreeController;
