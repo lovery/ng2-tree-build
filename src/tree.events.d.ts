@@ -7,6 +7,9 @@ export declare class NodeEvent {
 export declare class NodeSelectedEvent extends NodeEvent {
     constructor(node: Tree);
 }
+export declare class NodeActivatedEvent extends NodeEvent {
+    constructor(node: Tree);
+}
 export declare class NodeDestructiveEvent extends NodeEvent {
     constructor(node: Tree);
 }

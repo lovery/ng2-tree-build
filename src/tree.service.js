@@ -11,6 +11,7 @@ var TreeService = (function () {
         this.nodeRenamed$ = new Rx_1.Subject();
         this.nodeCreated$ = new Rx_1.Subject();
         this.nodeSelected$ = new Rx_1.Subject();
+        this.nodeActivated$ = new Rx_1.Subject();
         this.nodeExpanded$ = new Rx_1.Subject();
         this.nodeCollapsed$ = new Rx_1.Subject();
         this.controllers = new Map();
@@ -18,6 +19,9 @@ var TreeService = (function () {
     }
     TreeService.prototype.unselectStream = function (tree) {
         return this.nodeSelected$.filter(function (e) { return tree !== e.node; });
+    };
+    TreeService.prototype.deactivateStream = function (tree) {
+        return this.nodeActivated$.filter(function (e) { return tree !== e.node; });
     };
     TreeService.prototype.fireNodeRemoved = function (tree) {
         this.nodeRemoved$.next(new tree_events_1.NodeRemovedEvent(tree));
@@ -27,6 +31,9 @@ var TreeService = (function () {
     };
     TreeService.prototype.fireNodeSelected = function (tree) {
         this.nodeSelected$.next(new tree_events_1.NodeSelectedEvent(tree));
+    };
+    TreeService.prototype.fireNodeActivated = function (tree) {
+        this.nodeActivated$.next(new tree_events_1.NodeActivatedEvent(tree));
     };
     TreeService.prototype.fireNodeRenamed = function (oldValue, tree) {
         this.nodeRenamed$.next(new tree_events_1.NodeRenamedEvent(tree, oldValue, tree.value));

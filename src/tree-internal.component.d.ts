@@ -24,6 +24,7 @@ export declare class TreeInternalComponent implements OnInit, OnDestroy {
     private moveNodeToThisTreeAndRemoveFromPreviousOne(e, tree);
     private moveNodeToParentTreeAndRemoveFromPreviousOne(e, tree);
     onNodeSelected(e: MouseEvent): void;
+    onNodeActivated(e: MouseEvent): void;
     showRightMenu(e: MouseEvent): void;
     showLeftMenu(e: MouseEvent): void;
     onMenuItemSelected(e: NodeMenuItemSelectedEvent): void;

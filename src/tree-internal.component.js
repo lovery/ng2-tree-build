@@ -33,6 +33,8 @@ var TreeInternalComponent = (function () {
         });
         this.treeService.unselectStream(this.tree)
             .subscribe(function () { return _this.isSelected = false; });
+        this.treeService.deactivateStream(this.tree)
+            .subscribe(function () { return _this.isActive = false; });
         this.treeService.draggedStream(this.tree, this.element)
             .subscribe(function (e) {
             if (_this.tree.hasSibling(e.captured.tree)) {
@@ -69,7 +71,12 @@ var TreeInternalComponent = (function () {
         if (EventUtils.isLeftButtonClicked(e)) {
             this.isSelected = true;
             this.treeService.fireNodeSelected(this.tree);
+            this.onNodeActivated(e);
         }
+    };
+    TreeInternalComponent.prototype.onNodeActivated = function (e) {
+        this.isActive = true;
+        this.treeService.fireNodeActivated(this.tree);
     };
     TreeInternalComponent.prototype.showRightMenu = function (e) {
         if (!this.tree.hasRightMenu()) {
@@ -84,7 +91,7 @@ var TreeInternalComponent = (function () {
                 this.isRightMenuVisible = !this.isRightMenuVisible;
             }
             this.nodeMenuService.hideMenuForAllNodesExcept(this.element);
-            this.isActive = !this.isActive;
+            this.onNodeActivated(e);
         }
         e.preventDefault();
     };
@@ -104,7 +111,7 @@ var TreeInternalComponent = (function () {
                 }
             }
             this.nodeMenuService.hideMenuForAllNodesExcept(this.element);
-            this.isActive = !this.isActive;
+            this.onNodeActivated(e);
         }
     };
     TreeInternalComponent.prototype.onMenuItemSelected = function (e) {

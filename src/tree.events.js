@@ -19,6 +19,14 @@ var NodeSelectedEvent = (function (_super) {
     return NodeSelectedEvent;
 }(NodeEvent));
 exports.NodeSelectedEvent = NodeSelectedEvent;
+var NodeActivatedEvent = (function (_super) {
+    __extends(NodeActivatedEvent, _super);
+    function NodeActivatedEvent(node) {
+        _super.call(this, node);
+    }
+    return NodeActivatedEvent;
+}(NodeEvent));
+exports.NodeActivatedEvent = NodeActivatedEvent;
 var NodeDestructiveEvent = (function (_super) {
     __extends(NodeDestructiveEvent, _super);
     function NodeDestructiveEvent(node) {

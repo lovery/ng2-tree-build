@@ -1,4 +1,4 @@
-import { NodeRemovedEvent, NodeRenamedEvent, NodeCreatedEvent, NodeSelectedEvent, NodeMovedEvent, NodeExpandedEvent, NodeCollapsedEvent } from './tree.events';
+import { NodeRemovedEvent, NodeRenamedEvent, NodeCreatedEvent, NodeSelectedEvent, NodeActivatedEvent, NodeMovedEvent, NodeExpandedEvent, NodeCollapsedEvent } from './tree.events';
 import { RenamableNode } from './tree.types';
 import { Tree } from './tree';
 import { TreeController } from './tree-controller';
@@ -13,14 +13,17 @@ export declare class TreeService {
     nodeRenamed$: Subject<NodeRenamedEvent>;
     nodeCreated$: Subject<NodeCreatedEvent>;
     nodeSelected$: Subject<NodeSelectedEvent>;
+    nodeActivated$: Subject<NodeActivatedEvent>;
     nodeExpanded$: Subject<NodeExpandedEvent>;
     nodeCollapsed$: Subject<NodeCollapsedEvent>;
     private controllers;
     constructor(nodeDraggableService: NodeDraggableService);
     unselectStream(tree: Tree): Observable<any>;
+    deactivateStream(tree: Tree): Observable<any>;
     fireNodeRemoved(tree: Tree): void;
     fireNodeCreated(tree: Tree): void;
     fireNodeSelected(tree: Tree): void;
+    fireNodeActivated(tree: Tree): void;
     fireNodeRenamed(oldValue: RenamableNode | string, tree: Tree): void;
     fireNodeMoved(tree: Tree, parent: Tree): void;
     fireNodeSwitchFoldingType(tree: Tree): void;
