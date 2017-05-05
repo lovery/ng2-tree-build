@@ -33,7 +33,15 @@ var TreeController = (function () {
             this.treeInternalComponent.onMenuItemSelected({ nodeMenuItemAction: menu_events_1.NodeMenuItemAction.Remove });
         }
     };
+    TreeController.prototype.addChild = function (newNode) {
+        if (this.treeInternalComponent && typeof this.tree) {
+            var newTree = this.tree.createNode(Boolean(newNode.children), newNode);
+            this.treeInternalComponent.treeService.fireNodeCreated(newTree);
+        }
+    };
     TreeController.prototype.reloadChildren = function () {
+    };
+    TreeController.prototype.setChildren = function () {
     };
     return TreeController;
 }());
