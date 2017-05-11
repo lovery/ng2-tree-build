@@ -21,7 +21,7 @@ export declare class TreeService {
     unselectStream(tree: Tree): Observable<any>;
     deactivateStream(tree: Tree): Observable<any>;
     fireNodeRemoved(tree: Tree): void;
-    fireNodeCreated(tree: Tree): void;
+    fireNodeCreated(tree: Tree, controller: TreeController): void;
     fireNodeSelected(tree: Tree): void;
     fireNodeActivated(tree: Tree): void;
     fireNodeRenamed(oldValue: RenamableNode | string, tree: Tree): void;

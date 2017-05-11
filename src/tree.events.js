@@ -54,8 +54,9 @@ var NodeRemovedEvent = (function (_super) {
 exports.NodeRemovedEvent = NodeRemovedEvent;
 var NodeCreatedEvent = (function (_super) {
     __extends(NodeCreatedEvent, _super);
-    function NodeCreatedEvent(node) {
+    function NodeCreatedEvent(node, controller) {
         _super.call(this, node);
+        this.controller = controller;
     }
     return NodeCreatedEvent;
 }(NodeDestructiveEvent));

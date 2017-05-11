@@ -13,7 +13,7 @@ var Tree = (function () {
         if (parent === void 0) { parent = null; }
         if (isBranch === void 0) { isBranch = false; }
         this._childrenLoadingState = ChildrenLoadingState.NotStarted;
-        this.buildTreeFromModel(node, parent, isBranch || Boolean(node.children));
+        this.buildTreeFromModel(node, parent, isBranch || Array.isArray(node.children));
     }
     Tree.prototype.buildTreeFromModel = function (model, parent, isBranch) {
         var _this = this;
@@ -73,6 +73,27 @@ var Tree = (function () {
         enumerable: true,
         configurable: true
     });
+    Tree.prototype.reloadChildren = function () {
+        var _this = this;
+        if (this.childrenShouldBeLoaded()) {
+            this._childrenLoadingState = ChildrenLoadingState.Loading;
+            this._loadChildren(function (children) {
+                _this._children = _.map(children, function (child) { return new Tree(child, _this); });
+                _this._childrenLoadingState = ChildrenLoadingState.Completed;
+                if (_this.isNodeCollapsed()) {
+                    _this.switchFoldingType();
+                }
+            });
+        }
+    };
+    Tree.prototype.setChildren = function (children) {
+        var _this = this;
+        this._children = _.map(children, function (child) { return new Tree(child, _this); });
+        this._setFoldingType();
+        if (this.isNodeCollapsed()) {
+            this.switchFoldingType();
+        }
+    };
     Tree.prototype.createNode = function (isBranch, model) {
         if (model === void 0) { model = { value: '' }; }
         var tree = new Tree(model, this, isBranch);

@@ -1,4 +1,5 @@
 import { Tree } from './tree';
+import { TreeController } from './tree-controller';
 import { RenamableNode } from './tree.types';
 export declare class NodeEvent {
     node: Tree;
@@ -21,7 +22,8 @@ export declare class NodeRemovedEvent extends NodeDestructiveEvent {
     constructor(node: Tree);
 }
 export declare class NodeCreatedEvent extends NodeDestructiveEvent {
-    constructor(node: Tree);
+    controller: TreeController;
+    constructor(node: Tree, controller: TreeController);
 }
 export declare class NodeRenamedEvent extends NodeDestructiveEvent {
     oldValue: string | RenamableNode;

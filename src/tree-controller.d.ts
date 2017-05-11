@@ -10,6 +10,7 @@ export declare class TreeController {
     rename(newValue: string): void;
     remove(): void;
     addChild(newNode: TreeModel): void;
+    changeNodeId(id: string | number): void;
     reloadChildren(): void;
-    setChildren(): void;
+    setChildren(children: Array<TreeModel>): void;
 }

@@ -26,8 +26,8 @@ var TreeService = (function () {
     TreeService.prototype.fireNodeRemoved = function (tree) {
         this.nodeRemoved$.next(new tree_events_1.NodeRemovedEvent(tree));
     };
-    TreeService.prototype.fireNodeCreated = function (tree) {
-        this.nodeCreated$.next(new tree_events_1.NodeCreatedEvent(tree));
+    TreeService.prototype.fireNodeCreated = function (tree, controller) {
+        this.nodeCreated$.next(new tree_events_1.NodeCreatedEvent(tree, controller));
     };
     TreeService.prototype.fireNodeSelected = function (tree) {
         this.nodeSelected$.next(new tree_events_1.NodeSelectedEvent(tree));

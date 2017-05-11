@@ -34,14 +34,30 @@ var TreeController = (function () {
         }
     };
     TreeController.prototype.addChild = function (newNode) {
-        if (this.treeInternalComponent && typeof this.tree) {
+        if (this.tree) {
             var newTree = this.tree.createNode(Boolean(newNode.children), newNode);
-            this.treeInternalComponent.treeService.fireNodeCreated(newTree);
+            this.treeInternalComponent.treeService.fireNodeCreated(newTree, null);
         }
     };
-    TreeController.prototype.reloadChildren = function () {
+    TreeController.prototype.changeNodeId = function (id) {
+        if (!id || this.treeInternalComponent.treeService.getController(id)) {
+            return;
+        }
+        if (this.tree) {
+            this.treeInternalComponent.treeService.deleteController(this.tree.node.id);
+            this.tree.node.id = id;
+        }
+        this.treeInternalComponent.treeService.setController(id, this);
     };
-    TreeController.prototype.setChildren = function () {
+    TreeController.prototype.reloadChildren = function () {
+        if (this.tree) {
+            this.tree.reloadChildren();
+        }
+    };
+    TreeController.prototype.setChildren = function (children) {
+        if (this.tree && !this.tree.isLeaf()) {
+            this.tree.setChildren(children);
+        }
     };
     return TreeController;
 }());

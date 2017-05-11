@@ -156,7 +156,7 @@ var TreeInternalComponent = (function () {
         }
         if (this.tree.isNew()) {
             this.tree.value = e.value;
-            this.treeService.fireNodeCreated(this.tree);
+            this.treeService.fireNodeCreated(this.tree, this.controller);
         }
         if (this.tree.isBeingRenamed()) {
             var oldValue = this.tree.value;
