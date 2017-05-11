@@ -10,9 +10,23 @@ var ChildrenLoadingState;
 })(ChildrenLoadingState || (ChildrenLoadingState = {}));
 var Tree = (function () {
     function Tree(node, parent, isBranch) {
+        var _this = this;
         if (parent === void 0) { parent = null; }
         if (isBranch === void 0) { isBranch = false; }
         this._childrenLoadingState = ChildrenLoadingState.NotStarted;
+        this.childrenAsyncOnce = _.once(function () {
+            return new rxjs_1.Observable(function (observer) {
+                setTimeout(function () {
+                    _this._childrenLoadingState = ChildrenLoadingState.Loading;
+                    _this._loadChildren(function (children) {
+                        _this._children = _.map(children, function (child) { return new Tree(child, _this); });
+                        _this._childrenLoadingState = ChildrenLoadingState.Completed;
+                        observer.next(_this.children);
+                        observer.complete();
+                    });
+                });
+            });
+        });
         this.buildTreeFromModel(node, parent, isBranch || Array.isArray(node.children));
     }
     Tree.prototype.buildTreeFromModel = function (model, parent, isBranch) {
@@ -56,17 +70,8 @@ var Tree = (function () {
     });
     Object.defineProperty(Tree.prototype, "childrenAsync", {
         get: function () {
-            var _this = this;
             if (this.canLoadChildren()) {
-                setTimeout(function () { return _this._childrenLoadingState = ChildrenLoadingState.Loading; });
-                return new rxjs_1.Observable(function (observer) {
-                    _this._loadChildren(function (children) {
-                        _this._children = _.map(children, function (child) { return new Tree(child, _this); });
-                        _this._childrenLoadingState = ChildrenLoadingState.Completed;
-                        observer.next(_this.children);
-                        observer.complete();
-                    });
-                });
+                return this.childrenAsyncOnce();
             }
             return rxjs_1.Observable.of(this.children);
         },

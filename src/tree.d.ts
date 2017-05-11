@@ -14,6 +14,7 @@ export declare class Tree {
     childrenShouldBeLoaded(): boolean;
     readonly children: Tree[];
     readonly childrenAsync: Observable<Tree[]>;
+    private childrenAsyncOnce;
     reloadChildren(): void;
     setChildren(children: Array<TreeModel>): void;
     createNode(isBranch: boolean, model?: TreeModel): Tree;
