@@ -5,6 +5,13 @@ var TreeController = (function () {
         this.treeInternalComponent = treeInternalComponent;
         this.tree = this.treeInternalComponent.tree;
     }
+    Object.defineProperty(TreeController.prototype, "isSelect", {
+        get: function () {
+            return this.treeInternalComponent.isSelected;
+        },
+        enumerable: true,
+        configurable: true
+    });
     TreeController.prototype.select = function (e) {
         if (e === void 0) { e = new MouseEvent('click'); }
         if (!this.treeInternalComponent.isSelected && typeof this.treeInternalComponent.onNodeSelected === 'function') {
@@ -12,15 +19,33 @@ var TreeController = (function () {
         }
     };
     TreeController.prototype.expand = function () {
-        if (!this.tree.isNodeExpanded()) {
+        if (this.tree && !this.tree.isNodeExpanded()) {
             this.treeInternalComponent.onSwitchFoldingType();
         }
     };
+    Object.defineProperty(TreeController.prototype, "isExpanded", {
+        get: function () {
+            if (this.tree) {
+                return this.tree.isNodeExpanded();
+            }
+        },
+        enumerable: true,
+        configurable: true
+    });
     TreeController.prototype.collapse = function () {
         if (this.tree.isNodeExpanded()) {
             this.treeInternalComponent.onSwitchFoldingType();
         }
     };
+    Object.defineProperty(TreeController.prototype, "isCollapsed", {
+        get: function () {
+            if (this.tree) {
+                return this.tree.isNodeCollapsed();
+            }
+        },
+        enumerable: true,
+        configurable: true
+    });
     TreeController.prototype.rename = function (newValue) {
         if (this.tree) {
             this.tree.markAsBeingRenamed();

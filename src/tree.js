@@ -85,18 +85,14 @@ var Tree = (function () {
             this._loadChildren(function (children) {
                 _this._children = _.map(children, function (child) { return new Tree(child, _this); });
                 _this._childrenLoadingState = ChildrenLoadingState.Completed;
-                if (_this.isNodeCollapsed()) {
-                    _this.switchFoldingType();
-                }
             });
         }
     };
     Tree.prototype.setChildren = function (children) {
         var _this = this;
         this._children = _.map(children, function (child) { return new Tree(child, _this); });
-        this._setFoldingType();
-        if (this.isNodeCollapsed()) {
-            this.switchFoldingType();
+        if (this.childrenShouldBeLoaded()) {
+            this._childrenLoadingState = ChildrenLoadingState.Completed;
         }
     };
     Tree.prototype.createNode = function (isBranch, model) {
