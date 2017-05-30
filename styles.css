@@ -99,7 +99,17 @@ tree-internal .tree .node-value:after {
   transition: width 0.3s;
 }
 
-tree-internal .tree .node-value:hover:after {
+tree-internal .tree .value-container:hover .node-value:after,
+tree-internal .tree .value-container.active .node-value:after {
+  width: 100%;
+  background-color: #757575;
+}
+
+tree-internal .tree .value-container:hover .node-selected:after {
+  background-color: #212121;
+}
+
+tree-internal .tree .node-selected:after {
   width: 100%;
 }
 
@@ -112,10 +122,6 @@ tree-internal .tree .node-left-menu {
 tree-internal .tree .node-left-menu span:before {
   content: '\2026';
   color: #757575;
-}
-
-tree-internal .tree .node-selected:after {
-  width: 100%;
 }
 
 tree-internal .tree .folding {
@@ -141,6 +147,17 @@ tree-internal .tree .folding.node-expanded {
 
 tree-internal .tree .folding.node-expanded:before {
   content: '\25BC';
+  color: #757575;
+}
+
+tree-internal .tree .folding.node-empty {
+  color: #212121;
+  text-align: center;
+  font-size: 0.89em;
+}
+
+tree-internal .tree .folding.node-empty:before {
+  content: '\25B6';
   color: #757575;
 }
 
@@ -186,5 +203,29 @@ tree-internal .loading-children:after {
   100%  { color: #6a1b9a; }
 }
 
-
-
+.angular2-contextmenu .dropdown-menu {
+  background: #fff;
+  z-index: 100;
+  box-shadow: 0.766px 0.643px 5px 0px rgba(0, 0, 1, 0.17);
+  border-radius: 6px;
+  padding: 0;
+}
+.angular2-contextmenu .dropdown-menu li {
+  display: flex;
+}
+.angular2-contextmenu .dropdown-menu li a {
+  display: flex;
+  width: 100%;
+  align-items: center;
+  padding: 12px 18px;
+  font-size: 14px;
+  color: @color-4;
+  cursor: pointer;
+}
+.angular2-contextmenu .dropdown-menu li a:hover {
+  background-color: darken(#fff, 5%)
+}
+.angular2-contextmenu .dropdown-menu .divider {
+  margin: 0;
+  border-top: 1px solid #dddddd;
+}

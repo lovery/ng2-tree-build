@@ -1,7 +1,8 @@
 "use strict";
-var core_1 = require('@angular/core');
-var node_draggable_service_1 = require('./node-draggable.service');
-var captured_node_1 = require('./captured-node');
+Object.defineProperty(exports, "__esModule", { value: true });
+var core_1 = require("@angular/core");
+var node_draggable_service_1 = require("./node-draggable.service");
+var captured_node_1 = require("./captured-node");
 var NodeDraggableDirective = (function () {
     function NodeDraggableDirective(element, nodeDraggableService, renderer) {
         this.element = element;
@@ -12,17 +13,21 @@ var NodeDraggableDirective = (function () {
     }
     NodeDraggableDirective.prototype.ngOnInit = function () {
         if (!this.tree.isStatic()) {
-            this.renderer.setElementAttribute(this.nodeNativeElement, 'draggable', 'true');
+            if (this.tree.isDragable()) {
+                this.renderer.setElementAttribute(this.nodeNativeElement, 'draggable', 'true');
+                this.disposersForDragListeners.push(this.renderer.listen(this.nodeNativeElement, 'dragstart', this.handleDragStart.bind(this)));
+                this.disposersForDragListeners.push(this.renderer.listen(this.nodeNativeElement, 'dragend', this.handleDragEnd.bind(this)));
+            }
             this.disposersForDragListeners.push(this.renderer.listen(this.nodeNativeElement, 'dragenter', this.handleDragEnter.bind(this)));
             this.disposersForDragListeners.push(this.renderer.listen(this.nodeNativeElement, 'dragover', this.handleDragOver.bind(this)));
-            this.disposersForDragListeners.push(this.renderer.listen(this.nodeNativeElement, 'dragstart', this.handleDragStart.bind(this)));
             this.disposersForDragListeners.push(this.renderer.listen(this.nodeNativeElement, 'dragleave', this.handleDragLeave.bind(this)));
             this.disposersForDragListeners.push(this.renderer.listen(this.nodeNativeElement, 'drop', this.handleDrop.bind(this)));
-            this.disposersForDragListeners.push(this.renderer.listen(this.nodeNativeElement, 'dragend', this.handleDragEnd.bind(this)));
         }
     };
     NodeDraggableDirective.prototype.ngOnDestroy = function () {
+        /* tslint:disable:typedef */
         this.disposersForDragListeners.forEach(function (dispose) { return dispose(); });
+        /* tslint:enable:typedef */
     };
     NodeDraggableDirective.prototype.handleDragStart = function (e) {
         e.stopPropagation();
@@ -81,22 +86,23 @@ var NodeDraggableDirective = (function () {
     NodeDraggableDirective.prototype.notifyThatNodeWasDropped = function () {
         this.nodeDraggableService.fireNodeDragged(this.nodeDraggableService.getCapturedNode(), this.nodeDraggable);
     };
-    NodeDraggableDirective.DATA_TRANSFER_STUB_DATA = 'some browsers enable drag-n-drop only when dataTransfer has data';
-    NodeDraggableDirective.decorators = [
-        { type: core_1.Directive, args: [{
-                    selector: '[nodeDraggable]'
-                },] },
-    ];
-    NodeDraggableDirective.ctorParameters = function () { return [
-        { type: core_1.ElementRef, decorators: [{ type: core_1.Inject, args: [core_1.ElementRef,] },] },
-        { type: node_draggable_service_1.NodeDraggableService, decorators: [{ type: core_1.Inject, args: [node_draggable_service_1.NodeDraggableService,] },] },
-        { type: core_1.Renderer, decorators: [{ type: core_1.Inject, args: [core_1.Renderer,] },] },
-    ]; };
-    NodeDraggableDirective.propDecorators = {
-        'nodeDraggable': [{ type: core_1.Input },],
-        'tree': [{ type: core_1.Input },],
-    };
     return NodeDraggableDirective;
 }());
+NodeDraggableDirective.DATA_TRANSFER_STUB_DATA = 'some browsers enable drag-n-drop only when dataTransfer has data';
+NodeDraggableDirective.decorators = [
+    { type: core_1.Directive, args: [{
+                selector: '[nodeDraggable]'
+            },] },
+];
+/** @nocollapse */
+NodeDraggableDirective.ctorParameters = function () { return [
+    { type: core_1.ElementRef, decorators: [{ type: core_1.Inject, args: [core_1.ElementRef,] },] },
+    { type: node_draggable_service_1.NodeDraggableService, decorators: [{ type: core_1.Inject, args: [node_draggable_service_1.NodeDraggableService,] },] },
+    { type: core_1.Renderer, decorators: [{ type: core_1.Inject, args: [core_1.Renderer,] },] },
+]; };
+NodeDraggableDirective.propDecorators = {
+    'nodeDraggable': [{ type: core_1.Input },],
+    'tree': [{ type: core_1.Input },],
+};
 exports.NodeDraggableDirective = NodeDraggableDirective;
 //# sourceMappingURL=node-draggable.directive.js.map

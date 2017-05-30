@@ -21,6 +21,16 @@ ng2-tree is a simple [Angular 2](https://github.com/angular/angular) component f
     - [NodeRenamedEvent](#noderenamedevent)
     - [NodeExpandedEvent](#nodeexpandedevent)
     - [NodeCollapsedEvent](#nodecollapsedevent)
+- [:gun: Controller](#gun-controller)
+  - [select](#controller-select)
+  - [expand](#controller-expand)
+  - [collapse](#controller-collapse)
+  - [rename](#controller-rename)
+  - [remove](#controller-remove)
+  - [addChild](#controller-addChild)
+  - [changeNodeId](#controller-changeNodeId)
+  - [reloadChildren](#controller-reloadChildren)
+  - [setChildren](#controller-setChildren)
 - [Changes that should be taken into account in order to migrate from __ng2-tree V1__ to __ng2-tree V2__](#changes-that-should-be-taken-into-account-in-order-to-migrate-from-__ng2-tree-v1__-to-__ng2-tree-v2__)
 - [:bulb: Want to help?](#bulb-want-to-help)
 
@@ -71,7 +81,7 @@ class MyComponent {
         children: [
           {value: 'Java'},
           {value: 'C++'},
-          {value: 'C#'},
+          {value: 'C#'}
         ]
       },
       {
@@ -79,7 +89,7 @@ class MyComponent {
         children: [
           {value: 'JavaScript'},
           {value: 'CoffeeScript'},
-          {value: 'Lua'},
+          {value: 'Lua'}
         ]
       }
     ]
@@ -169,7 +179,7 @@ As you can see - object that conforms to this interface has a recursive nature, 
         children: [
           {value: 'Java'},
           {value: 'C++'},
-          {value: 'C#'},
+          {value: 'C#'}
         ]
       },
       {
@@ -177,7 +187,7 @@ As you can see - object that conforms to this interface has a recursive nature, 
         children: [
           {value: 'JavaScript'},
           {value: 'CoffeeScript'},
-          {value: 'Lua'},
+          {value: 'Lua'}
         ]
       }
     ]
@@ -219,7 +229,7 @@ Here is an example of such a node in the `TreeModel` object:
             }
           },
           {value: 'C++'},
-          {value: 'C#'},
+          {value: 'C#'}
         ]
       },
       {
@@ -229,7 +239,7 @@ Here is an example of such a node in the `TreeModel` object:
             callback([
               {value: 'JavaScript'},
               {value: 'CoffeeScript'},
-              {value: 'TypeScript'},
+              {value: 'TypeScript'}
             ]);
           }, 5000);
         }
@@ -250,7 +260,7 @@ Another worth noting thing is `loadChildren`. This function on `TreeModel` allow
       callback([
         {value: 'JavaScript'},
         {value: 'CoffeeScript'},
-        {value: 'TypeScript'},
+        {value: 'TypeScript'}
       ]);
     }, 5000);
   }
@@ -276,7 +286,7 @@ Here is an example of its usage:
     'cssClasses': {
       'expanded': 'fa fa-caret-down fa-lg',
       'collapsed': 'fa fa-caret-right fa-lg',
-      'inactive:': 'fa fa-lg'
+      'leaf:': 'fa fa-lg'
     },
     'templates': {
       'node': '<i class="fa fa-folder-o fa-lg"></i>',
@@ -287,22 +297,22 @@ Here is an example of its usage:
   children: [
     {value: 'JavaScript'},
     {value: 'CoffeeScript'},
-    {value: 'Lua'},
+    {value: 'Lua'}
   ]
 }
 ```
 
 * `static` - Boolean - This option makes it impossible to drag a tree or modify it in a some way, though you still can select nodes in the static tree and appropriate events will be generated.
-* `rightMenu` - Boolan - This option allows you to activate (true, by default) or deactivate (false) right menu when clicking with right button of a mouse.
+* `rightMenu` - Boolean - This option allows you to activate (true, by default) or deactivate (false) right menu when clicking with right button of a mouse.
 * `leftMenu` - Boolean - This option allows you to activate (true) or deactivate (false, by default) left menu.
 * `cssClasses` - Object:
   * `expanded` - String - It specifies a css class (or classes) for an item which represents expanded state of a node. The item is clickable and it transitions the node to the collapsed state
   * `collapsed` - String - It specifies a css class (or classes) for an item which represents collapsed state of a node. The item is clickable and it transitions the node to the expanded state
-  * `inactive` - String - It specifies a css class (or classes) for an item which represents a node without an option to expand or collapse - in other words: a leaf node.
+  * `leaf` - String - It specifies a css class (or classes) for an item which represents a node without an option to expand or collapse - in other words: a leaf node.
 * `templates` - Object:
   * `node` - String - It specifies a html template which will be included to the left of the node's value.
-  * `leaf` - String - It specifies a html template which will be included to the left of the left node's value.
-  * `leftMenu` - String - It specifies a html template to the right of the node's value. This template becomes clickable and on the click node's menu appears.
+  * `leaf` - String - It specifies a html template which will be included to the left of the leaf's value.
+  * `leftMenu` - String - It specifies a html template to the right of the node's value. This template becomes clickable and shows a menu on node's click.
 
 All options that's defined on a `parent` are automatically applied to children. If you want you can override them by `settings` of the child node.
 
@@ -397,10 +407,10 @@ You can subscribe to `NodeCreatedEvent` by attaching listener to `(nodeCreated)`
     </tree>
 ```
 
-`NodeCreatedEvent` has a `node` property of type `Tree`, which contains a created node.
+`NodeCreatedEvent` has a `node` property of type `Tree`, which contains a created node and a `controller` property, which will give you access to node's controller.
 
 ```typescript
-{node: <Tree>{...}}
+{node: <Tree>{...}, controller: <TreeController>{...}}
 ```
 
 #### NodeRenamedEvent
@@ -461,6 +471,127 @@ You can subscribe to `NodeCollapsedEvent` by attaching listener to `(nodeCollaps
 ```typescript
 {node: <Tree>{...}}
 ```
+
+## :gun: Controller
+Fist of all you should know how to get a controller of a particular node. You can take a controller of a node only if you set id property of a node. For example your tree structure should look like:
+```
+public tree: TreeModel = {
+    value: 'Programming languages by programming paradigm',
+    id: 1,
+    children: [
+      {
+        value: 'Object-oriented programming',
+        id: 2,
+        children: [
+          {value: 'Java', id: 3},
+          {value: 'C++', id: 4},
+          {value: 'C#', id 5},
+        ]
+      },
+      {
+        value: 'Prototype-based programming',
+        id: 6,
+        children: [
+          {value: 'JavaScript', id: 7},
+          {value: 'CoffeeScript', id: 8},
+          {value: 'Lua', id: 9},
+        ]
+      }
+    ]
+  };
+```
+Ids should be unique within one tree, otherwise some controllers will be overwrite and you wont be able to take them.
+In order to get a node's controller you shoud add hash tag to tree tag like this:
+```
+<tree [tree]="tree" #treeComponent></tree>
+```
+and you will be able to access the controller like this `this.treeComponent.getControllerByNodeId(6)`
+
+Here are description and an example of how to use all methods of a node's controller:
+```
+let oop = this.treeComponent.getControllerByNodeId(2);
+```
+
+#### select - selecting a node
+```
+oop.select();
+```
+This method selects the node and reselect all other nodes, also it fires select event, so it will call your `nodeSelected` function if you have one.
+
+#### isSelect - check if a node is selected
+```
+oop.isSelect();
+```
+This method returns true if the node is selected and false if it isn't.
+
+#### collapse - collapsing a node
+```
+oop.collapse();
+```
+This method collapses the node in case it can be collapsed. On successful collapsing the collapse event is fired.
+
+#### isCollapsed - check if a node is collapsed
+```
+oop.isCollapsed();
+```
+This method returns true if the node is collapsed and false if it isn't.
+
+#### expand - expanding a node
+```
+oop.expand();
+```
+This method expands the node in case it can be expanded. On successful expanding the expand event is fired.
+
+#### isExpanded - check if a node is expanded
+```
+oop.isExpanded();
+```
+This method returns true if the node is expanded and false if it isn't.
+
+#### rename - change value of a node
+```
+oop.rename('new value');
+```
+This method accepts a string and set it to the node's name, this will also fires rename event.
+
+#### remove - remove a node
+```
+oop.remove();
+```
+This method will remove the node and it's children and it will fire remove event.
+
+#### addChild - create a child node
+```
+let newNode: TreeModel = {
+  value: 'Go',
+  children: []
+};
+oop.addChild(newNode);
+```
+This method accepts a TreeModel and add it as a children of the node or as a sibling.
+
+### changeNodeId - change node's id
+```
+oop.changeNodeId(10);
+```
+This method can change the node's id. When the user creates a node from node's menu you will access the new node after it's created and this method will provide a way to changed node's id.
+
+### reloadChildren - execute `loadChildren` function
+```
+oop.reloadChildren();
+```
+This method executes `loadChildren` if there is such a function provided in the TreeModel.
+
+### setChildren - change a node's children
+```
+let newChildren: Array<TreeModel> = [
+  {value: 'new children 1'},
+  {value: 'new children 2'},
+  {value: 'new children 3'}
+];
+oop.setChildren(newChildren);
+```
+This method replace all existing children of the node with new ones.
 
 ## Changes that should be taken into account in order to migrate from __ng2-tree V1__ to __ng2-tree V2__
 - Events were reworked:

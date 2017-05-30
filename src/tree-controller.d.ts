@@ -4,8 +4,8 @@ export declare class TreeController {
     private treeInternalComponent;
     private tree;
     constructor(treeInternalComponent: TreeInternalComponent);
-    readonly isSelect: boolean;
     select(e?: MouseEvent): void;
+    readonly isSelect: boolean;
     expand(): void;
     readonly isExpanded: boolean;
     collapse(): void;

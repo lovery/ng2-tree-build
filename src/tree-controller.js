@@ -1,10 +1,17 @@
 "use strict";
-var menu_events_1 = require('./menu/menu.events');
+Object.defineProperty(exports, "__esModule", { value: true });
+var menu_events_1 = require("./menu/menu.events");
 var TreeController = (function () {
     function TreeController(treeInternalComponent) {
         this.treeInternalComponent = treeInternalComponent;
         this.tree = this.treeInternalComponent.tree;
     }
+    TreeController.prototype.select = function (e) {
+        if (e === void 0) { e = new MouseEvent('click'); }
+        if (!this.treeInternalComponent.isSelected && typeof this.treeInternalComponent.onNodeSelected === 'function') {
+            this.treeInternalComponent.onNodeSelected(e);
+        }
+    };
     Object.defineProperty(TreeController.prototype, "isSelect", {
         get: function () {
             return this.treeInternalComponent.isSelected;
@@ -12,12 +19,6 @@ var TreeController = (function () {
         enumerable: true,
         configurable: true
     });
-    TreeController.prototype.select = function (e) {
-        if (e === void 0) { e = new MouseEvent('click'); }
-        if (!this.treeInternalComponent.isSelected && typeof this.treeInternalComponent.onNodeSelected === 'function') {
-            this.treeInternalComponent.onNodeSelected(e);
-        }
-    };
     TreeController.prototype.expand = function () {
         if (this.tree && !this.tree.isNodeExpanded()) {
             this.treeInternalComponent.onSwitchFoldingType();
