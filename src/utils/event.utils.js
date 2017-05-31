@@ -1,5 +1,4 @@
 "use strict";
-Object.defineProperty(exports, "__esModule", { value: true });
 function isLeftButtonClicked(e) {
     return e.button === MouseButtons.Left;
 }
@@ -12,13 +11,13 @@ function isEscapePressed(e) {
     return e.keyCode === Keys.Escape;
 }
 exports.isEscapePressed = isEscapePressed;
-var Keys;
 (function (Keys) {
     Keys[Keys["Escape"] = 27] = "Escape";
-})(Keys = exports.Keys || (exports.Keys = {}));
-var MouseButtons;
+})(exports.Keys || (exports.Keys = {}));
+var Keys = exports.Keys;
 (function (MouseButtons) {
     MouseButtons[MouseButtons["Left"] = 0] = "Left";
     MouseButtons[MouseButtons["Right"] = 2] = "Right";
-})(MouseButtons = exports.MouseButtons || (exports.MouseButtons = {}));
+})(exports.MouseButtons || (exports.MouseButtons = {}));
+var MouseButtons = exports.MouseButtons;
 //# sourceMappingURL=event.utils.js.map

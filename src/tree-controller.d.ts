@@ -5,11 +5,11 @@ export declare class TreeController {
     private tree;
     constructor(treeInternalComponent: TreeInternalComponent);
     select(e?: MouseEvent): void;
-    readonly isSelect: boolean;
+    isSelected(): boolean;
     expand(): void;
-    readonly isExpanded: boolean;
+    isExpanded(): boolean;
     collapse(): void;
-    readonly isCollapsed: boolean;
+    isCollapsed(): boolean;
     rename(newValue: string): void;
     remove(): void;
     addChild(newNode: TreeModel): void;

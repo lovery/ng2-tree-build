@@ -1,5 +1,5 @@
 import { OnInit, OnDestroy, ElementRef } from '@angular/core';
-import * as TreeTypes from './tree.types';
+import { Ng2TreeSettings } from './tree.types';
 import { Tree } from './tree';
 import { TreeController } from './tree-controller';
 import { NodeMenuService } from './menu/node-menu.service';
@@ -11,7 +11,7 @@ export declare class TreeInternalComponent implements OnInit, OnDestroy {
     treeService: TreeService;
     element: ElementRef;
     tree: Tree;
-    settings: TreeTypes.Ng2TreeSettings;
+    settings: Ng2TreeSettings;
     isSelected: boolean;
     isActive: boolean;
     isRightMenuVisible: boolean;

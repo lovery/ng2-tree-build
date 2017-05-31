@@ -1,9 +1,8 @@
 "use strict";
-Object.defineProperty(exports, "__esModule", { value: true });
-var tree_events_1 = require("./tree.events");
-var Rx_1 = require("rxjs/Rx");
-var core_1 = require("@angular/core");
-var node_draggable_service_1 = require("./draggable/node-draggable.service");
+var tree_events_1 = require('./tree.events');
+var Rx_1 = require('rxjs/Rx');
+var core_1 = require('@angular/core');
+var node_draggable_service_1 = require('./draggable/node-draggable.service');
 var TreeService = (function () {
     function TreeService(nodeDraggableService) {
         this.nodeDraggableService = nodeDraggableService;
@@ -75,14 +74,13 @@ var TreeService = (function () {
         }
         return null;
     };
+    TreeService.decorators = [
+        { type: core_1.Injectable },
+    ];
+    TreeService.ctorParameters = function () { return [
+        { type: node_draggable_service_1.NodeDraggableService, decorators: [{ type: core_1.Inject, args: [node_draggable_service_1.NodeDraggableService,] },] },
+    ]; };
     return TreeService;
 }());
-TreeService.decorators = [
-    { type: core_1.Injectable },
-];
-/** @nocollapse */
-TreeService.ctorParameters = function () { return [
-    { type: node_draggable_service_1.NodeDraggableService, decorators: [{ type: core_1.Inject, args: [node_draggable_service_1.NodeDraggableService,] },] },
-]; };
 exports.TreeService = TreeService;
 //# sourceMappingURL=tree.service.js.map

@@ -1,8 +1,7 @@
 "use strict";
-Object.defineProperty(exports, "__esModule", { value: true });
-var core_1 = require("@angular/core");
-var tree_service_1 = require("./tree.service");
-var tree_1 = require("./tree");
+var core_1 = require('@angular/core');
+var tree_service_1 = require('./tree.service');
+var tree_1 = require('./tree');
 var TreeComponent = (function () {
     function TreeComponent(treeService) {
         this.treeService = treeService;
@@ -52,31 +51,30 @@ var TreeComponent = (function () {
     TreeComponent.prototype.getControllerByNodeId = function (id) {
         return this.treeService.getController(id);
     };
+    TreeComponent.EMPTY_TREE = new tree_1.Tree({ value: '' });
+    TreeComponent.decorators = [
+        { type: core_1.Component, args: [{
+                    selector: 'tree',
+                    template: "<tree-internal #rootComponent [tree]=\"tree\" [settings]=\"settings\"></tree-internal>",
+                    providers: [tree_service_1.TreeService]
+                },] },
+    ];
+    TreeComponent.ctorParameters = function () { return [
+        { type: tree_service_1.TreeService, decorators: [{ type: core_1.Inject, args: [tree_service_1.TreeService,] },] },
+    ]; };
+    TreeComponent.propDecorators = {
+        'treeModel': [{ type: core_1.Input, args: ['tree',] },],
+        'settings': [{ type: core_1.Input },],
+        'nodeCreated': [{ type: core_1.Output },],
+        'nodeRemoved': [{ type: core_1.Output },],
+        'nodeRenamed': [{ type: core_1.Output },],
+        'nodeSelected': [{ type: core_1.Output },],
+        'nodeMoved': [{ type: core_1.Output },],
+        'nodeExpanded': [{ type: core_1.Output },],
+        'nodeCollapsed': [{ type: core_1.Output },],
+        'rootComponent': [{ type: core_1.ViewChild, args: ['rootComponent',] },],
+    };
     return TreeComponent;
 }());
-TreeComponent.EMPTY_TREE = new tree_1.Tree({ value: '' });
-TreeComponent.decorators = [
-    { type: core_1.Component, args: [{
-                selector: 'tree',
-                template: "<tree-internal #rootComponent [tree]=\"tree\" [settings]=\"settings\"></tree-internal>",
-                providers: [tree_service_1.TreeService]
-            },] },
-];
-/** @nocollapse */
-TreeComponent.ctorParameters = function () { return [
-    { type: tree_service_1.TreeService, decorators: [{ type: core_1.Inject, args: [tree_service_1.TreeService,] },] },
-]; };
-TreeComponent.propDecorators = {
-    'treeModel': [{ type: core_1.Input, args: ['tree',] },],
-    'settings': [{ type: core_1.Input },],
-    'nodeCreated': [{ type: core_1.Output },],
-    'nodeRemoved': [{ type: core_1.Output },],
-    'nodeRenamed': [{ type: core_1.Output },],
-    'nodeSelected': [{ type: core_1.Output },],
-    'nodeMoved': [{ type: core_1.Output },],
-    'nodeExpanded': [{ type: core_1.Output },],
-    'nodeCollapsed': [{ type: core_1.Output },],
-    'rootComponent': [{ type: core_1.ViewChild, args: ['rootComponent',] },],
-};
 exports.TreeComponent = TreeComponent;
 //# sourceMappingURL=tree.component.js.map

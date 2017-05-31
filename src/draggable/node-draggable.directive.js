@@ -1,8 +1,7 @@
 "use strict";
-Object.defineProperty(exports, "__esModule", { value: true });
-var core_1 = require("@angular/core");
-var node_draggable_service_1 = require("./node-draggable.service");
-var captured_node_1 = require("./captured-node");
+var core_1 = require('@angular/core');
+var node_draggable_service_1 = require('./node-draggable.service');
+var captured_node_1 = require('./captured-node');
 var NodeDraggableDirective = (function () {
     function NodeDraggableDirective(element, nodeDraggableService, renderer) {
         this.element = element;
@@ -25,9 +24,7 @@ var NodeDraggableDirective = (function () {
         }
     };
     NodeDraggableDirective.prototype.ngOnDestroy = function () {
-        /* tslint:disable:typedef */
         this.disposersForDragListeners.forEach(function (dispose) { return dispose(); });
-        /* tslint:enable:typedef */
     };
     NodeDraggableDirective.prototype.handleDragStart = function (e) {
         e.stopPropagation();
@@ -86,23 +83,22 @@ var NodeDraggableDirective = (function () {
     NodeDraggableDirective.prototype.notifyThatNodeWasDropped = function () {
         this.nodeDraggableService.fireNodeDragged(this.nodeDraggableService.getCapturedNode(), this.nodeDraggable);
     };
+    NodeDraggableDirective.DATA_TRANSFER_STUB_DATA = 'some browsers enable drag-n-drop only when dataTransfer has data';
+    NodeDraggableDirective.decorators = [
+        { type: core_1.Directive, args: [{
+                    selector: '[nodeDraggable]'
+                },] },
+    ];
+    NodeDraggableDirective.ctorParameters = function () { return [
+        { type: core_1.ElementRef, decorators: [{ type: core_1.Inject, args: [core_1.ElementRef,] },] },
+        { type: node_draggable_service_1.NodeDraggableService, decorators: [{ type: core_1.Inject, args: [node_draggable_service_1.NodeDraggableService,] },] },
+        { type: core_1.Renderer, decorators: [{ type: core_1.Inject, args: [core_1.Renderer,] },] },
+    ]; };
+    NodeDraggableDirective.propDecorators = {
+        'nodeDraggable': [{ type: core_1.Input },],
+        'tree': [{ type: core_1.Input },],
+    };
     return NodeDraggableDirective;
 }());
-NodeDraggableDirective.DATA_TRANSFER_STUB_DATA = 'some browsers enable drag-n-drop only when dataTransfer has data';
-NodeDraggableDirective.decorators = [
-    { type: core_1.Directive, args: [{
-                selector: '[nodeDraggable]'
-            },] },
-];
-/** @nocollapse */
-NodeDraggableDirective.ctorParameters = function () { return [
-    { type: core_1.ElementRef, decorators: [{ type: core_1.Inject, args: [core_1.ElementRef,] },] },
-    { type: node_draggable_service_1.NodeDraggableService, decorators: [{ type: core_1.Inject, args: [node_draggable_service_1.NodeDraggableService,] },] },
-    { type: core_1.Renderer, decorators: [{ type: core_1.Inject, args: [core_1.Renderer,] },] },
-]; };
-NodeDraggableDirective.propDecorators = {
-    'nodeDraggable': [{ type: core_1.Input },],
-    'tree': [{ type: core_1.Input },],
-};
 exports.NodeDraggableDirective = NodeDraggableDirective;
 //# sourceMappingURL=node-draggable.directive.js.map

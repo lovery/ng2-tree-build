@@ -1,6 +1,5 @@
 "use strict";
-Object.defineProperty(exports, "__esModule", { value: true });
-var menu_events_1 = require("./menu/menu.events");
+var menu_events_1 = require('./menu/menu.events');
 var TreeController = (function () {
     function TreeController(treeInternalComponent) {
         this.treeInternalComponent = treeInternalComponent;
@@ -12,41 +11,29 @@ var TreeController = (function () {
             this.treeInternalComponent.onNodeSelected(e);
         }
     };
-    Object.defineProperty(TreeController.prototype, "isSelect", {
-        get: function () {
-            return this.treeInternalComponent.isSelected;
-        },
-        enumerable: true,
-        configurable: true
-    });
+    TreeController.prototype.isSelected = function () {
+        return this.treeInternalComponent.isSelected;
+    };
     TreeController.prototype.expand = function () {
         if (this.tree && !this.tree.isNodeExpanded()) {
             this.treeInternalComponent.onSwitchFoldingType();
         }
     };
-    Object.defineProperty(TreeController.prototype, "isExpanded", {
-        get: function () {
-            if (this.tree) {
-                return this.tree.isNodeExpanded();
-            }
-        },
-        enumerable: true,
-        configurable: true
-    });
+    TreeController.prototype.isExpanded = function () {
+        if (this.tree) {
+            return this.tree.isNodeExpanded();
+        }
+    };
     TreeController.prototype.collapse = function () {
         if (this.tree.isNodeExpanded()) {
             this.treeInternalComponent.onSwitchFoldingType();
         }
     };
-    Object.defineProperty(TreeController.prototype, "isCollapsed", {
-        get: function () {
-            if (this.tree) {
-                return this.tree.isNodeCollapsed();
-            }
-        },
-        enumerable: true,
-        configurable: true
-    });
+    TreeController.prototype.isCollapsed = function () {
+        if (this.tree) {
+            return this.tree.isNodeCollapsed();
+        }
+    };
     TreeController.prototype.rename = function (newValue) {
         if (this.tree) {
             this.tree.markAsBeingRenamed();

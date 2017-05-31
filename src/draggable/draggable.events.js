@@ -1,5 +1,4 @@
 "use strict";
-Object.defineProperty(exports, "__esModule", { value: true });
 var NodeDraggableEvent = (function () {
     function NodeDraggableEvent(captured, target) {
         this.captured = captured;

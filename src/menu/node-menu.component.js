@@ -1,9 +1,8 @@
 "use strict";
-Object.defineProperty(exports, "__esModule", { value: true });
-var core_1 = require("@angular/core");
-var node_menu_service_1 = require("./node-menu.service");
-var menu_events_1 = require("./menu.events");
-var event_utils_1 = require("../utils/event.utils");
+var core_1 = require('@angular/core');
+var node_menu_service_1 = require('./node-menu.service');
+var menu_events_1 = require('./menu.events');
+var event_utils_1 = require('../utils/event.utils');
 var NodeMenuComponent = (function () {
     function NodeMenuComponent(renderer, nodeMenuService) {
         this.renderer = renderer;
@@ -48,28 +47,26 @@ var NodeMenuComponent = (function () {
     };
     NodeMenuComponent.prototype.closeMenu = function (e) {
         var mouseClicked = e instanceof MouseEvent;
-        // Check if the click is fired on an element inside a menu
         var containingTarget = (this.menuContainer.nativeElement !== e.target && this.menuContainer.nativeElement.contains(e.target));
         if (mouseClicked && !containingTarget || event_utils_1.isEscapePressed(e)) {
             this.nodeMenuService.fireMenuEvent(e.target, menu_events_1.NodeMenuAction.Close);
         }
     };
+    NodeMenuComponent.decorators = [
+        { type: core_1.Component, args: [{
+                    selector: 'node-menu',
+                    template: "\n    <div class=\"node-menu\">\n      <ul class=\"node-menu-content\" #menuContainer>\n        <li class=\"node-menu-item\" *ngFor=\"let menuItem of availableMenuItems\"\n          (click)=\"onMenuItemSelected($event, menuItem)\">\n          <div class=\"node-menu-item-icon {{menuItem.cssClass}}\"></div>\n          <span class=\"node-menu-item-value\">{{menuItem.name}}</span>\n        </li>\n      </ul>\n    </div>\n  "
+                },] },
+    ];
+    NodeMenuComponent.ctorParameters = function () { return [
+        { type: core_1.Renderer, decorators: [{ type: core_1.Inject, args: [core_1.Renderer,] },] },
+        { type: node_menu_service_1.NodeMenuService, decorators: [{ type: core_1.Inject, args: [node_menu_service_1.NodeMenuService,] },] },
+    ]; };
+    NodeMenuComponent.propDecorators = {
+        'menuItemSelected': [{ type: core_1.Output },],
+        'menuContainer': [{ type: core_1.ViewChild, args: ['menuContainer',] },],
+    };
     return NodeMenuComponent;
 }());
-NodeMenuComponent.decorators = [
-    { type: core_1.Component, args: [{
-                selector: 'node-menu',
-                template: "\n    <div class=\"node-menu\">\n      <ul class=\"node-menu-content\" #menuContainer>\n        <li class=\"node-menu-item\" *ngFor=\"let menuItem of availableMenuItems\"\n          (click)=\"onMenuItemSelected($event, menuItem)\">\n          <div class=\"node-menu-item-icon {{menuItem.cssClass}}\"></div>\n          <span class=\"node-menu-item-value\">{{menuItem.name}}</span>\n        </li>\n      </ul>\n    </div>\n  "
-            },] },
-];
-/** @nocollapse */
-NodeMenuComponent.ctorParameters = function () { return [
-    { type: core_1.Renderer, decorators: [{ type: core_1.Inject, args: [core_1.Renderer,] },] },
-    { type: node_menu_service_1.NodeMenuService, decorators: [{ type: core_1.Inject, args: [node_menu_service_1.NodeMenuService,] },] },
-]; };
-NodeMenuComponent.propDecorators = {
-    'menuItemSelected': [{ type: core_1.Output },],
-    'menuContainer': [{ type: core_1.ViewChild, args: ['menuContainer',] },],
-};
 exports.NodeMenuComponent = NodeMenuComponent;
 //# sourceMappingURL=node-menu.component.js.map

@@ -1,8 +1,7 @@
 "use strict";
-Object.defineProperty(exports, "__esModule", { value: true });
-var core_1 = require("@angular/core");
-var Rx_1 = require("rxjs/Rx");
-var menu_events_1 = require("./menu.events");
+var core_1 = require('@angular/core');
+var Rx_1 = require('rxjs/Rx');
+var menu_events_1 = require('./menu.events');
 var NodeMenuService = (function () {
     function NodeMenuService() {
         this.nodeMenuEvents$ = new Rx_1.Subject();
@@ -22,12 +21,11 @@ var NodeMenuService = (function () {
             action: menu_events_1.NodeMenuAction.Close
         });
     };
+    NodeMenuService.decorators = [
+        { type: core_1.Injectable },
+    ];
+    NodeMenuService.ctorParameters = function () { return []; };
     return NodeMenuService;
 }());
-NodeMenuService.decorators = [
-    { type: core_1.Injectable },
-];
-/** @nocollapse */
-NodeMenuService.ctorParameters = function () { return []; };
 exports.NodeMenuService = NodeMenuService;
 //# sourceMappingURL=node-menu.service.js.map
