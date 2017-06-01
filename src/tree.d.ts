@@ -3,6 +3,7 @@ import { TreeModel, RenamableNode, FoldingType } from './tree.types';
 export declare class Tree {
     private _children;
     private _loadChildren;
+    private _reloadChildren;
     private _childrenLoadingState;
     node: TreeModel;
     parent: Tree;

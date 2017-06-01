@@ -43,6 +43,9 @@ var Tree = (function () {
                 _this._addChild(new Tree(child, _this), index);
             });
         }
+        if (_.isFunction(this.node.reloadChildren)) {
+            this._reloadChildren = this.node.reloadChildren;
+        }
         if (!Array.isArray(this._children)) {
             this._children = this.node.loadChildren || isBranch ? [] : null;
         }
@@ -83,6 +86,13 @@ var Tree = (function () {
         if (this.childrenShouldBeLoaded()) {
             this._childrenLoadingState = ChildrenLoadingState.Loading;
             this._loadChildren(function (children) {
+                _this._children = _.map(children, function (child) { return new Tree(child, _this); });
+                _this._childrenLoadingState = ChildrenLoadingState.Completed;
+            });
+        }
+        else if (this._reloadChildren) {
+            this._childrenLoadingState = ChildrenLoadingState.Loading;
+            this._reloadChildren(function (children) {
                 _this._children = _.map(children, function (child) { return new Tree(child, _this); });
                 _this._childrenLoadingState = ChildrenLoadingState.Completed;
             });

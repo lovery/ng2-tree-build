@@ -13,6 +13,7 @@ export interface TreeModel {
     id?: string | number;
     children?: TreeModel[];
     loadChildren?: ChildrenLoadingFunction;
+    reloadChildren?: ChildrenLoadingFunction;
     settings?: TreeModelSettings;
     _status?: TreeStatus;
     _foldingType?: FoldingType;
