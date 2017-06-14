@@ -1,6 +1,7 @@
 "use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
+var NodeEditableEventAction;
 (function (NodeEditableEventAction) {
     NodeEditableEventAction[NodeEditableEventAction["Cancel"] = 0] = "Cancel";
-})(exports.NodeEditableEventAction || (exports.NodeEditableEventAction = {}));
-var NodeEditableEventAction = exports.NodeEditableEventAction;
+})(NodeEditableEventAction = exports.NodeEditableEventAction || (exports.NodeEditableEventAction = {}));
 //# sourceMappingURL=editable.events.js.map

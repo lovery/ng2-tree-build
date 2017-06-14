@@ -1,13 +1,13 @@
 import { OnInit, EventEmitter, OnChanges, SimpleChanges } from '@angular/core';
 import { TreeService } from './tree.service';
-import { TreeModel, Ng2TreeSettings } from './tree.types';
+import * as TreeTypes from './tree.types';
 import { Tree } from './tree';
 import { TreeController } from './tree-controller';
 export declare class TreeComponent implements OnInit, OnChanges {
     private treeService;
     private static EMPTY_TREE;
-    treeModel: TreeModel;
-    settings: Ng2TreeSettings;
+    treeModel: TreeTypes.TreeModel;
+    settings: TreeTypes.Ng2TreeSettings;
     nodeCreated: EventEmitter<any>;
     nodeRemoved: EventEmitter<any>;
     nodeRenamed: EventEmitter<any>;

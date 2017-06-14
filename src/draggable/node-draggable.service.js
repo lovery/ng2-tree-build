@@ -1,7 +1,8 @@
 "use strict";
-var core_1 = require('@angular/core');
-var Rx_1 = require('rxjs/Rx');
-var draggable_events_1 = require('./draggable.events');
+Object.defineProperty(exports, "__esModule", { value: true });
+var core_1 = require("@angular/core");
+var Rx_1 = require("rxjs/Rx");
+var draggable_events_1 = require("./draggable.events");
 var NodeDraggableService = (function () {
     function NodeDraggableService() {
         this.draggableNodeEvents$ = new Rx_1.Subject();
@@ -21,11 +22,12 @@ var NodeDraggableService = (function () {
     NodeDraggableService.prototype.releaseCapturedNode = function () {
         this.capturedNode = null;
     };
-    NodeDraggableService.decorators = [
-        { type: core_1.Injectable },
-    ];
-    NodeDraggableService.ctorParameters = function () { return []; };
     return NodeDraggableService;
 }());
+NodeDraggableService.decorators = [
+    { type: core_1.Injectable },
+];
+/** @nocollapse */
+NodeDraggableService.ctorParameters = function () { return []; };
 exports.NodeDraggableService = NodeDraggableService;
 //# sourceMappingURL=node-draggable.service.js.map

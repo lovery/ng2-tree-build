@@ -1,5 +1,7 @@
 "use strict";
-var _ = require('lodash');
+Object.defineProperty(exports, "__esModule", { value: true });
+var _defaultsDeep = require("lodash/defaultsDeep");
+var _get = require("lodash/get");
 var FoldingType = (function () {
     function FoldingType(_cssClass) {
         this._cssClass = _cssClass;
@@ -11,26 +13,26 @@ var FoldingType = (function () {
         enumerable: true,
         configurable: true
     });
-    FoldingType.Expanded = new FoldingType('node-expanded');
-    FoldingType.Collapsed = new FoldingType('node-collapsed');
-    FoldingType.Empty = new FoldingType('node-empty');
-    FoldingType.Leaf = new FoldingType('node-leaf');
     return FoldingType;
 }());
+FoldingType.Expanded = new FoldingType('node-expanded');
+FoldingType.Collapsed = new FoldingType('node-collapsed');
+FoldingType.Empty = new FoldingType('node-empty');
+FoldingType.Leaf = new FoldingType('node-leaf');
 exports.FoldingType = FoldingType;
 var TreeModelSettings = (function () {
     function TreeModelSettings() {
     }
     TreeModelSettings.merge = function (sourceA, sourceB) {
-        return _.defaultsDeep({}, _.get(sourceA, 'settings'), _.get(sourceB, 'settings'), { static: false, leftMenu: false, rightMenu: true, dragable: true });
+        return _defaultsDeep({}, _get(sourceA, 'settings'), _get(sourceB, 'settings'), { static: false, leftMenu: false, rightMenu: true, dragable: true });
     };
     return TreeModelSettings;
 }());
 exports.TreeModelSettings = TreeModelSettings;
+var TreeStatus;
 (function (TreeStatus) {
     TreeStatus[TreeStatus["New"] = 0] = "New";
     TreeStatus[TreeStatus["Modified"] = 1] = "Modified";
     TreeStatus[TreeStatus["IsBeingRenamed"] = 2] = "IsBeingRenamed";
-})(exports.TreeStatus || (exports.TreeStatus = {}));
-var TreeStatus = exports.TreeStatus;
+})(TreeStatus = exports.TreeStatus || (exports.TreeStatus = {}));
 //# sourceMappingURL=tree.types.js.map

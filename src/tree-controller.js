@@ -1,5 +1,6 @@
 "use strict";
-var menu_events_1 = require('./menu/menu.events');
+Object.defineProperty(exports, "__esModule", { value: true });
+var menu_events_1 = require("./menu/menu.events");
 var TreeController = (function () {
     function TreeController(treeInternalComponent) {
         this.treeInternalComponent = treeInternalComponent;
